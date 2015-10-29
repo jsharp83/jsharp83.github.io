@@ -2,7 +2,7 @@
 title:       jsharp83
 email:       jsharp83@gmail.com
 author:      Eunchul Jeon
-description: "A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff."
+description: "Programmer's blog"
 baseurl:     ""
 url:         "http://jsharp83.github.io"
 date_format: "%b %-d, %Y"
