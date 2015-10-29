@@ -8,7 +8,7 @@ categoris: IOS OpenCV
 
 When we follow the tutorial or sample, I think most important thing is version of library because It is little bit different with each versions. And android development environment is easily changed. So this post will be contain wrong information as time goes by.
 
-**You can download all this source in my [Github](https://github.com/jsharp83/jsharp83.github.io/tree/master/source/Android/OpencvNDKTest)**
+**You can download all this source in my [Github](https://github.com/jsharp83/jsharp83.github.io/tree/master/source/android/OpencvNDKTest)**
 
 ## Prerequisite
 If you want to use OpenCV library in Android, You should download and install following things.
