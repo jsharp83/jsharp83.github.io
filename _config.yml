@@ -8,7 +8,7 @@ url:         "http://jsharp83.github.io"
 date_format: "%b %-d, %Y"
 
 # Google services
-google_analytics:
+google_analytics: 'UA-69445494-1'
 google_verification:
 
 # Optional features
