@@ -10,11 +10,11 @@ I'm interested in mobile programming and robotics.
 
 ## Professional experience
 * Naver (2015. 3 ~ Present)
-* IOS Developer
-* [http://www.navercorp.com/en/index.nhn](http://www.navercorp.com/en/index.nhn)
+  * IOS Developer
+  * [http://www.navercorp.com/en/index.nhn](http://www.navercorp.com/en/index.nhn)
 * Exlunch (2011. 7 ~ 2015. 3)
-* Cofounder, Developer, CTO
-* [http://www.exlunch.com](http://www.exlunch.com)
+  * Cofounder, Developer, CTO
+  * [http://www.exlunch.com](http://www.exlunch.com)
 
 ### Pholar (2015.3 ~ Present)
 Pholar is a SNS based on HashTag.  
