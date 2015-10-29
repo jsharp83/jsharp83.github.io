@@ -13,7 +13,7 @@ google_verification:
 
 # Optional features
 animated:             false
-show_related_posts:   false
+show_related_posts:   true
 show_post_footers:    false
 show_social_icons:    false
 ajaxify_contact_form: false
@@ -29,7 +29,7 @@ facebook_appid:
 facebook_comments_number: 10
 
 # Social icons
-github_username:
+github_username:jsharp83
 bitbucket_username:
 stackoverflow_id:
 twitter_username:
