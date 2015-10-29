@@ -14,13 +14,13 @@ google_verification:
 # Optional features
 animated:             true
 show_related_posts:   true
-show_post_footers:    true
+show_post_footers:    false
 show_social_icons:    false
 ajaxify_contact_form: true
 
 # Disqus post comments
 # (leave blank to disable Disqus)
-disqus_shortname:
+disqus_shortname:"jsharp83"
 
 # Facebook Comments plugin
 # (leave blank to disable Facebook Comments, otherwise set it to true)
