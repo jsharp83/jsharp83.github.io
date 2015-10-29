@@ -3,7 +3,7 @@ layout: page
 title: About 
 permalink: /about/
 ---
-as
+
 I'm a programmer and especially I'm making money by developing IOS software now.  
 I like English but it doesn't like me so I use stupid English sometimes.  
 I'm interested in mobile programming and robotics.
