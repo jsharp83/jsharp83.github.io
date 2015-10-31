@@ -1,9 +1,7 @@
 ---
 layout: page
-title: PPT
-permalink: /ppt/
+title: Presentation
+permalink: /presentationList/
 ---
-
-Presentation List
 * 2015
-
+  * Misteries of AutoLayout
