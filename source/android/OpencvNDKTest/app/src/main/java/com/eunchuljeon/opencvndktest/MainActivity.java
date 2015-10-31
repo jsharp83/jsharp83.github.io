@@ -1,5 +1,7 @@
 package com.eunchuljeon.opencvndktest;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,7 +10,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.opencv.android.Utils;
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
+
+import static org.opencv.imgproc.Imgproc.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView view = (TextView) findViewById(R.id.textView);
         view.setText(getStringFromNative());
+
     }
 
     @Override
@@ -62,5 +75,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void makeGrayImage(View view){
         System.out.println("Make gray image using OpenCV");
+
+        Bitmap image = BitmapFactory.decodeResource(getResources(),R.drawable.test);
+        Mat imageMat = new Mat( image.getHeight(), image.getWidth(), CvType.CV_8U, new Scalar(4));
+        Utils.bitmapToMat(image, imageMat);
+        cvtColor(imageMat, imageMat, COLOR_RGBA2GRAY);
+        Utils.matToBitmap(imageMat, image);
+        ImageView imageView = (ImageView) findViewById(R.id.imageView1);
+        imageView.setImageBitmap(image);
     }
 }
