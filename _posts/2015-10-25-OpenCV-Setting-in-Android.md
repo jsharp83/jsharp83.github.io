@@ -140,64 +140,6 @@ view.setText(getStringFromNative());
 
 ## OpenCV Setting
 Following part, this [link](http://hujiaweibujidao.github.io/blog/2014/10/22/android-ndk-and-opencv-development-with-android-studio/) is very helpful for me.
-1. Change the Android.mk in the jni folder. You should set the opencvroot path.
-{% highlight bash %}
-
-LOCAL_PATH := $(call my-dir)
-include $(CLEAR_VARS)
-
-#opencv
-OPENCVROOT:= 
-OPENCV_CAMERA_MODULES:=off
-OPENCV_INSTALL_MODULES:=on
-OPENCV_LIB_TYPE:=SHARED
-include ${OPENCVROOT}/sdk/native/jni/OpenCV.mk
-LOCAL_MODULE    := OpenCVNDKTest
-LOCAL_SRC_FILES := main.cpp
-LOCAL_LDLIBS := -llog
-include $(BUILD_SHARED_LIBRARY)
-
-{% endhighlight %}
-
-2. Add ndk-build tool and build.
-{% highlight %}
-NDK_PROJECT_PATH=$ModuleFileDir$/build/intermediates/ndk NDK_LIBS_OUT=$ModuleFileDir$/src/main/jniLibs NDK_APPLICATION_MK=$ModuleFileDir$/src/main/jni/Application.mk APP_BUILD_SCRIPT=$ModuleFileDir$/src/main/jni/Android.mk V=1
-{% endhighlight %}
-![sc11.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc11.png)
-
-3. Change content_main.xml to show image and button like following image.
-![sc12.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc12.png)
-
-4. Change the MainActivity.java to use OpenCV
-{% highlight java %}
-public class MainActivity extends AppCompatActivity {
-
-static{
-if (!OpenCVLoader.initDebug()) {
-// Handle initialization error
-} else {
-System.loadLibrary("OpenCVNDKTest");
-}
-}
-
-.....
-
-public void makeGrayImage(View view){
-System.out.println("Make gray image using OpenCV");
-
-Bitmap image = BitmapFactory.decodeResource(getResources(),R.drawable.test);
-Mat imageMat = new Mat( image.getHeight(), image.getWidth(), CvType.CV_8U, new Scalar(4));
-Utils.bitmapToMat(image, imageMat);
-cvtColor(imageMat, imageMat, COLOR_RGBA2GRAY);
-Utils.matToBitmap(imageMat, image);
-ImageView imageView = (ImageView) findViewById(R.id.imageView1);
-imageView.setImageBitmap(image);
-}
-
-{% endhighlight %}
-
-5. You can get gray image using OpenCV library like following screenshot.
-![sc13.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc13.png)
 
  
 ## Reference
