@@ -66,27 +66,26 @@ include $(BUILD_SHARED_LIBRARY)
   ![sc9.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc9.png)
   * change build.gradle like following. If you have more information about this, see this [link](http://hujiaweibujidao.github.io/blog/2014/10/22/android-ndk-and-opencv-development-with-android-studio/)
 
-      {% highlight bash %}
-         apply plugin: 'com.android.application'
-
-         android {
-             compileSdkVersion 23
-             buildToolsVersion "23.0.1"
-
-             defaultConfig {
-             applicationId "com.eunchuljeon.opencvndktest"
-             minSdkVersion 16
-             targetSdkVersion 23
-             versionCode 1
-             versionName "1.0"
-
-             ndk{
-             moduleName "OpenCVNDKTest"
-             }
-         }
-      {% endhighlight %}
-
 6. change content_main.xml and MainActivity.java.
+
+7. If you see 'hello-jni' string on your simulator, it is end of NDK setting.
+![sc10.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc10.png)
+
+## OpenCV Setting
+Following part, this [link](http://hujiaweibujidao.github.io/blog/2014/10/22/android-ndk-and-opencv-development-with-android-studio/) is very helpful for me.
+1. Change the Android.mk in the jni folder. You should set the opencvroot path.
+
+2. Add ndk-build tool and build.
+
+3. Change content_main.xml to show image and button like following image.
+![sc12.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc12.png)
+
+4. Change the MainActivity.java to use OpenCV
+
+5. You can get gray image using OpenCV library like following screenshot.
+![sc13.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc13.png)
+
+
  
 ## Reference
 * [http://stackoverflow.com/questions/17767557/how-to-use-opencv-in-android-studio-using-gradle-build-tool/22427267#22427267](http://stackoverflow.com/questions/17767557/how-to-use-opencv-in-android-studio-using-gradle-build-tool/22427267#22427267)  
