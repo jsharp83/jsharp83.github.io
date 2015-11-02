@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -25,7 +26,11 @@ import static org.opencv.imgproc.Imgproc.*;
 public class MainActivity extends AppCompatActivity {
 
     static{
-        System.loadLibrary("OpenCVNDKTest");
+        if (!OpenCVLoader.initDebug()) {
+            // Handle initialization error
+        } else {
+            System.loadLibrary("OpenCVNDKTest");
+        }
     }
 
     public native String getStringFromNative();
