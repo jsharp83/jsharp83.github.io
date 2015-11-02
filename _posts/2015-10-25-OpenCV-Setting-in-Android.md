@@ -66,7 +66,7 @@ include $(BUILD_SHARED_LIBRARY)
   ![sc9.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc9.png)
   * change build.gradle like following. If you have more information about this, see this [link](http://hujiaweibujidao.github.io/blog/2014/10/22/android-ndk-and-opencv-development-with-android-studio/)
 
-6. change content_main.xml and MainActivity.java.
+6. Change content_main.xml and MainActivity.java
 
 7. If you see 'hello-jni' string on your simulator, it is end of NDK setting.
 ![sc10.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc10.png)
