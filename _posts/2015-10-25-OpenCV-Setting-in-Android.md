@@ -84,7 +84,6 @@ include $(BUILD_SHARED_LIBRARY)
              moduleName "OpenCVNDKTest"
              }
          }
-         ....
       {% endhighlight %}
 
 6. change content_main.xml and MainActivity.java.
