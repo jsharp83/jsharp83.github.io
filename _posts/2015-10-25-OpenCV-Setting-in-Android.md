@@ -64,24 +64,9 @@ APP_ABI=all
   ![sc8.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc8.png)
   * Set NDK Path _ndk.dir_ in PROJECT_HOME/local.properties
   ![sc9.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc9.png)
-* change build.gradle like following. If you have more information about this, see this [link](http://ph0b.com/android-studio-gradle-and-ndk-integration/)
+* change build.gradle like following. If you have more information about this, see this [link](http://hujiaweibujidao.github.io/blog/2014/10/22/android-ndk-and-opencv-development-with-android-studio/)
 {% highlight bash %}
-import org.apache.tools.ant.taskdefs.condition.Os
 apply plugin: 'com.android.application'
-
-def getNdkBuildPath() {
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
-def command =  properties.getProperty('ndk.dir')
-if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-command += "\\ndk-build.cmd"
-} else {
-command += "/ndk-build"
-}
-
-return command
-}
 
 android {
 compileSdkVersion 23
@@ -93,55 +78,15 @@ minSdkVersion 16
 targetSdkVersion 23
 versionCode 1
 versionName "1.0"
-}
 
-sourceSets.main {
-jniLibs.srcDir 'src/main/libs'
-jni.srcDirs = []
-}
-
-ext {
-nativeDebuggable = false
-}
-
-task buildNative(type: Exec, description: 'Compile JNI source via NDK') {
-if (nativeDebuggable) {
-commandLine getNdkBuildPath(), 'NDK_DEBUG=1', '-C', file('src/main').absolutePath
-} else {
-commandLine getNdkBuildPath(), '-C', file('src/main').absolutePath
+ndk{
+moduleName "OpenCVNDKTest"
 }
 }
-
-tasks.withType(JavaCompile) {
-compileTask -> compileTask.dependsOn buildNative
-}
-
-task cleanNative(type: Exec, description: 'Clean native objs and lib') {
-commandLine getNdkBuildPath(), '-C', file('src/main').absolutePath, 'clean'
-}
-
-clean.dependsOn 'cleanNative'
-
-buildTypes {
-release {
-minifyEnabled false
-proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-}
-debug {
-jniDebuggable true
-}
-}
-}
-
-dependencies {
-compile fileTree(dir: 'libs', include: ['*.jar'])
-testCompile 'junit:junit:4.12'
-compile 'com.android.support:appcompat-v7:23.1.0'
-compile 'com.android.support:design:23.1.0'
-}
+....
 {% endhighlight %}
 
-6. change content_main.xml and MainActivity,java. If you see the following screenshot, NDK setting  is successfully finished.
+6. change content_main.xml and MainActivity,java.
 {% highlight xml %}
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -193,9 +138,72 @@ view.setText(getStringFromNative());
 7. If you see 'hello-jni' string on your simulator, it is end of NDK setting.
   ![sc10.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc10.png)
 
+## OpenCV Setting
+Following part, this [link](http://hujiaweibujidao.github.io/blog/2014/10/22/android-ndk-and-opencv-development-with-android-studio/) is very helpful for me.
+1. Change the Android.mk in the jni folder. You should set the opencvroot path.
+{% highlight bash %}
+
+LOCAL_PATH := $(call my-dir)
+include $(CLEAR_VARS)
+
+#opencv
+OPENCVROOT:= 
+OPENCV_CAMERA_MODULES:=off
+OPENCV_INSTALL_MODULES:=on
+OPENCV_LIB_TYPE:=SHARED
+include ${OPENCVROOT}/sdk/native/jni/OpenCV.mk
+LOCAL_MODULE    := OpenCVNDKTest
+LOCAL_SRC_FILES := main.cpp
+LOCAL_LDLIBS := -llog
+include $(BUILD_SHARED_LIBRARY)
+
+{% endhighlight %}
+
+2. Add ndk-build tool and build.
+{% highlight %}
+NDK_PROJECT_PATH=$ModuleFileDir$/build/intermediates/ndk NDK_LIBS_OUT=$ModuleFileDir$/src/main/jniLibs NDK_APPLICATION_MK=$ModuleFileDir$/src/main/jni/Application.mk APP_BUILD_SCRIPT=$ModuleFileDir$/src/main/jni/Android.mk V=1
+{% endhighlight %}
+![sc11.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc11.png)
+
+3. Change content_main.xml to show image and button like following image.
+![sc12.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc12.png)
+
+4. Change the MainActivity.java to use OpenCV
+{% highlight java %}
+public class MainActivity extends AppCompatActivity {
+
+static{
+if (!OpenCVLoader.initDebug()) {
+// Handle initialization error
+} else {
+System.loadLibrary("OpenCVNDKTest");
+}
+}
+
+.....
+
+public void makeGrayImage(View view){
+System.out.println("Make gray image using OpenCV");
+
+Bitmap image = BitmapFactory.decodeResource(getResources(),R.drawable.test);
+Mat imageMat = new Mat( image.getHeight(), image.getWidth(), CvType.CV_8U, new Scalar(4));
+Utils.bitmapToMat(image, imageMat);
+cvtColor(imageMat, imageMat, COLOR_RGBA2GRAY);
+Utils.matToBitmap(imageMat, image);
+ImageView imageView = (ImageView) findViewById(R.id.imageView1);
+imageView.setImageBitmap(image);
+}
+
+{% endhighlight %}
+
+5. You can get gray image using OpenCV library like following screenshot.
+![sc13.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc13.png)
+
+ 
 ## Reference
 * [http://stackoverflow.com/questions/17767557/how-to-use-opencv-in-android-studio-using-gradle-build-tool/22427267#22427267](http://stackoverflow.com/questions/17767557/how-to-use-opencv-in-android-studio-using-gradle-build-tool/22427267#22427267)  
 * [https://www.davidlab.net/ko/tech/using-the-android-ndk-with-android-studio-part1/](https://www.davidlab.net/ko/tech/using-the-android-ndk-with-android-studio-part1/)
 * [http://hujiaweibujidao.github.io/blog/2014/10/22/android-ndk-and-opencv-development-with-android-studio/](http://hujiaweibujidao.github.io/blog/2014/10/22/android-ndk-and-opencv-development-with-android-studio/)
 * [http://i5on9i.blogspot.kr/2015/02/android-studio-ndk-hello-world.html](http://i5on9i.blogspot.kr/2015/02/android-studio-ndk-hello-world.htm)
 * [http://roadinbook.blogspot.kr/2012/01/ndk-applicationmk-androidmk.html](http://roadinbook.blogspot.kr/2012/01/ndk-applicationmk-androidmk.html)
+* [http://docs.opencv.org/2.4/doc/tutorials/introduction/android_binary_package/dev_with_OCV_on_Android.html#application-development-with-static-initialization](http://docs.opencv.org/2.4/doc/tutorials/introduction/android_binary_package/dev_with_OCV_on_Android.html#application-development-with-static-initialization)
