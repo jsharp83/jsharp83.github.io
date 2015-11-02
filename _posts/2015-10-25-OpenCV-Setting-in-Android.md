@@ -83,7 +83,6 @@ include $(BUILD_SHARED_LIBRARY)
       moduleName "OpenCVNDKTest"
       }
       }
-      ....
       {% endhighlight %}
  
 ## Reference
