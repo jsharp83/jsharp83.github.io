@@ -65,25 +65,6 @@ include $(BUILD_SHARED_LIBRARY)
   * Set NDK Path _ndk.dir_ in PROJECT_HOME/local.properties
   ![sc9.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc9.png)
   * change build.gradle like following. If you have more information about this, see this [link](http://hujiaweibujidao.github.io/blog/2014/10/22/android-ndk-and-opencv-development-with-android-studio/)
-      {% highlight %}
-      apply plugin: "com.android.application"
-
-      android {
-          compileSdkVersion 23
-          buildToolsVersion "23.0.1"
-
-          defaultConfig {
-              applicationId "com.eunchuljeon.opencvndktest"
-              minSdkVersion 16
-              targetSdkVersion 23
-              versionCode 1
-              versionName "1.0"
-
-          ndk{
-              moduleName "OpenCVNDKTest"
-          }
-      }
-      {% endhighlight %}
 
 6. change content_main.xml and MainActivity,java.
  
