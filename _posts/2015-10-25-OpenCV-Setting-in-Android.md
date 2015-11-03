@@ -129,11 +129,11 @@ public native String getStringFromNative();
 protected void onCreate(Bundle savedInstanceState) {
 super.onCreate(savedInstanceState);
 setContentView(R.layout.activity_main);
-.....
+
 TextView view = (TextView) findViewById(R.id.textView);
 view.setText(getStringFromNative());
 }
-.....	
+
     {% endhighlight %} 
 
 7. If you see 'hello-jni' string on your simulator, it is end of NDK setting.
@@ -180,8 +180,6 @@ if (!OpenCVLoader.initDebug()) {
 System.loadLibrary("OpenCVNDKTest");
 }
 }
-
-.....
 
 public void makeGrayImage(View view){
 System.out.println("Make gray image using OpenCV");
