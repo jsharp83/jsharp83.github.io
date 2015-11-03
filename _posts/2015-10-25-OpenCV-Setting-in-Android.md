@@ -66,7 +66,7 @@ include $(BUILD_SHARED_LIBRARY)
   ![sc9.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc9.png)
   * change build.gradle like following. If you have more information about this, see this [link](http://hujiaweibujidao.github.io/blog/2014/10/22/android-ndk-and-opencv-development-with-android-studio/)
 
-{% highlight bash %}
+    {% highlight bash %}
 apply plugin: 'com.android.application'
 
 android {
@@ -84,11 +84,11 @@ ndk{
 moduleName "OpenCVNDKTest"
 }
 }
-....
-{% endhighlight %}
+
+    {% endhighlight %}
 
 6. change content_main.xml and MainActivity,java.
-{% highlight xml %}
+    {% highlight xml %}
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
@@ -103,9 +103,9 @@ tools:showIn="@layout/activity_main" tools:context=".MainActivity">
 <TextView android:id="@+id/textView" android:text="Hello World!" android:layout_width="wrap_content"
 android:layout_height="wrap_content" />
 </RelativeLayout>
-{% endhighlight %}
+    {% endhighlight %}
 
-{% highlight java %}
+    {% highlight java %}
 package com.eunchuljeon.opencvndktest;
 
 import android.os.Bundle;
@@ -134,7 +134,7 @@ TextView view = (TextView) findViewById(R.id.textView);
 view.setText(getStringFromNative());
 }
 .....	
-{% endhighlight %}
+    {% endhighlight %} 
 
 7. If you see 'hello-jni' string on your simulator, it is end of NDK setting.
 ![sc10.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc10.png)
