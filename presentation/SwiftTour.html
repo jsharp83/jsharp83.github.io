@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+	<meta charset="utf-8">
+
+	<title>Energy efficiency and the user experience in iOS</title>
+
+	<meta name="description" content="A Swift Tour">
+	<meta name="author" content="Eunchul Jeon">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+	<!-- Code syntax highlighting -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+
+	<!-- Printing and PDF exports -->
+	<script>
+	  var link = document.createElement( 'link' );
+	  link.rel = 'stylesheet';
+	  link.type = 'text/css';
+	  link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+	  document.getElementsByTagName( 'head' )[0].appendChild( link );
+	</script>
+
+	<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+  </head>
+
+  <body>
+
+	<div class="reveal">
+
+	  <!-- Any section element inside of this container is displayed as a slide -->
+	  <div class="slides">
+		<section>
+		  <h2>A Swift Tour</h2>
+		  <p>
+			The swift Programming Language(Swift 2.1)
+		  </p>
+		</section>
+
+		<section>
+		  <h2> Playground, and Hello World</h2>
+		  <p>
+			<img src="./images/1.png">
+		  </p>
+		  <pre>
+			<code class="swift">
+			  print("Hello, world!")
+			</code>
+		  </pre>		  		  
+		</section>
+
+		<section>
+		  <section data-markdown>
+			<script type="text/template">
+			  ## Simple Values
+
+			  var : 변하는 것, let : 변하지 않는 것.
+
+			  ```
+var myVariable = 42
+myVariable = 50
+let myConstant = 42
+
+			  ```
+			</script>
+		  </section>
+
+		  <section data-markdown>
+			<script type="text/template">
+			  ## Simple Values
+
+		var : 변하는 것, let : 변하지 않는 것.
+		
+<pre><code class="swift">
+class SomeClass {
+   var value = 0
+   init(_ value: Int){
+   self.value = value
+   }
+}
+let someObj = SomeClass(10)
+
+// 아래 코드는 문제 없이 실행된다.
+someObj.value = 20
+</code></pre>
+		</script>
+		</section>
+		<section  data-markdown>		
+		<script type="text/template">
+			  ## Simple Values
+
+			  var : 변하는 것, let : 변하지 않는 것.
+
+			  ```
+let ma = NSMutableArray()
+
+// 아래 코드는 문제없이 실행된다.
+ma.addObject("E1”)
+			  ```
+			</script>
+		  </section>
+
+		<section  data-markdown>		
+		<script type="text/template">
+			  ## Simple Values
+
+			  타입을 명시적으로 할 때.
+		
+```
+let implicitInteger = 70
+let implicitDouble = 70.0
+let explicitDouble: Double = 70
+```
+
+  
+스트링을 더할 때
+```
+let label = "The width is "
+let width = 94
+let widthLabel = label + String(width)
+```
+
+  
+스트링 중간에 변수를 넣을 때
+```
+let apples = 3
+let oranges = 5
+let appleSummary = "I have \(apples) apples."
+let fruitSummary = "I have \(apples + oranges) pieces of fruit."		
+```		
+
+			</script>
+		  </section>
+		</section>
+		<section>
+				<section  data-markdown>		
+		<script type="text/template">
+		## Array, Dictionary
+```
+var shoppingList = ["catfish", "water", "tulips", "blue paint"]
+shoppingList[1] = "bottle of water"
+ 
+var occupations = [
+    "Malcolm": "Captain",
+    "Kaylee": "Mechanic",
+]
+occupations["Jayne"] = "Public Relations"		
+```
+		
+		</script>
+		</section>
+
+
+<section  data-markdown>		
+		<script type="text/template">
+## ARRAY, DICTIONARY
+빈 Array, Dictonary를 생성할 때
+```
+let emptyArray = [String]()
+let emptyDictionary = [String: Float]()
+```
+
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Array, Dictionary
+더 축약하면....
+
+```
+let shoppingList = []
+let occupations = [:]
+```
+</script>
+</section>
+</section>
+
+		</section>
+		
+	  </div>
+
+	</div>
+
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
+
+	<script>
+
+	  // Full list of configuration options available at:
+	  // https://github.com/hakimel/reveal.js#configuration
+	  Reveal.initialize({
+	  controls: true,
+	  progress: true,
+	  history: true,
+	  center: true,
+
+	  transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+	  // Optional reveal.js plugins
+	  dependencies: [
+	  { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+	  { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+	  { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+	  { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+	  { src: 'plugin/zoom-js/zoom.js', async: true },
+	  { src: 'plugin/notes/notes.js', async: true }
+	  ]
+	  });
+
+	</script>
+
+  </body>
+</html>
