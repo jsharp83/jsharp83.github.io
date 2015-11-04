@@ -334,6 +334,105 @@ default:
 </script>
 </section>
 
+<section data-markdown>
+<script type="text/template">
+## Optional type
+Swift에서 nil은 모든 타입에 가능.  
+nil 이 될 수도 있는 변수를 선언할 때 '?' 를 사용
+
+```
+// optional type.
+var optionalString : String?   // nil 로 초기화
+ 
+// non-optional type.
+var nonOptionalString : String // nil 이 될 수 없음. 초기화 필요
+```
+
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## !(forced-unwrapping operator)
+Optional을 이용하여 안전한 코드를 짜려면 반드시 if 문으로 값이 있는지 확인을 해야 한다.
+값이 있는 경우엔 ‘!’ 를 이용하여 값이 있음을 명시적으로 알려줘야 한다.
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## !(forced-unwrapping operator)
+
+```
+let numCards = ["one" : 1 , "two" : 2, "three" : 3,
+               "four" : 4 , "five": 5]
+ 
+// dictionary[key] 는 optional type을 반환 (즉,myCard 는 Int?)
+let myCard = numCards["two"]
+if myCard { // 값을 체크
+ 
+    let card = myCard! // 값이 있으므로 !로 값을 드러냄
+    // card의 타입은 Int (Int? 가 아님)
+    
+    println("card \(card)")
+ 
+}else {
+ 
+    println("no card")
+}
+
+let numCards = ["one" : 1 , "two" : 2, "three" : 3, "four" : 4 , "five": 5]
+let myCard = numCards["nine"]    // myCard = nil 
+ 
+println("\(myCard!)")      // Runtime Error 발생
+```
+
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Optional Binding
+
+```
+let numCards = ["one" : 1 , "two" : 2, "three" : 3,
+               "four" : 4 , "five": 5]
+ 
+if let card = numCards["two"] { // 값 체크 & unwapping 
+ 
+    println("card \(card)")  // card 는 Int 타입.
+ 
+}else{
+    println("no card")
+}
+```
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Optional Chaining
+
+```
+// 중첩 Optional Binding
+if let home = paul.residence {
+    if let postalAddress = home.address{
+        if let building = postalAddress.buildingNumber{
+            if let convertedNumber = building.toInt(){
+                println("building number of paul is \(convertedNumber)")
+            }
+         }
+     }
+}
+ 
+// Optional Chaining
+if let addressNumber = paul.residence?.address?.buildingNumber?.toInt(){ 
+    println("building number of paul is \(addressNumber)")
+}
+```
+</script>
+</section>
+
 
 
 </section>
@@ -829,23 +928,73 @@ case let .Error(error):
 </section>
  
 <section>
+
 <section data-markdown>
 <script type="text/template">
-</script>
+## Protocol and Extensions
 
+```
+protocol ExampleProtocol {
+    var simpleDescription: String { get }
+    mutating func adjust()
+}
+
+class SimpleClass: ExampleProtocol {
+    var simpleDescription: String = "A very simple class."
+    var anotherProperty: Int = 69105
+    func adjust() {
+        simpleDescription += "  Now 100% adjusted."
+    }
+}
+var a = SimpleClass()
+a.adjust()
+let aDescription = a.simpleDescription
+```
+</script>
 </section>
 
+<section data-markdown>
+<script type="text/template">
+## Protocol and Extensions
+Structure
+```
+struct SimpleStructure: ExampleProtocol {
+    var simpleDescription: String = "A simple structure"
+    mutating func adjust() {
+        simpleDescription += " (adjusted)"
+    }
+}
+var b = SimpleStructure()
+b.adjust()
+let bDescription = b.simpleDescription
+```
 
+mutating keyword가 structure 일 때만 있음.  
+Class의 method 들은 언제든지 하위 메소드에서 수정 될 수 있음.
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Protocol and Extensions
+Structure
+```
+extension Int: ExampleProtocol {
+    var simpleDescription: String {
+        return "The number \(self)"
+    }
+    mutating func adjust() {
+        self += 42
+    }
+}
+
+print(7.simpleDescription)
+```
+</script>
+</section>
 
 </section>
  
-<section>
-<section data-markdown>
-<script type="text/template">
-</script>
-
-</section>
-
 
 
 		</section>
