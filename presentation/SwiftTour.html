@@ -992,13 +992,142 @@ print(7.simpleDescription)
 ```
 </script>
 </section>
-
 </section>
  
+<section>
+<h2> Using Swift with Cocoa and Objective-C </h2>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Understanding the Swift Import Process
+```
+import Foundation
+```
+
+* Remap certain Objective-C types to their equivalents in Swift, like id to AnyObject
+* Remap certain Objective-C core types to their alternatives in Swift, like NSString to String
+* Remap certain Objective-C concepts to matching concepts in Swift, like pointers to optionals
+
+</script>
+</section>
+
+<section>
+
+<section data-markdown>
+<script type="text/template">
+## Interacting with Objective-C APIs
+
+Initialization
+
+```
+- (instancetype)init;
+- (instancetype)initWithFrame:(CGRect)frame
+                        style:(UITableViewStyle)style;
+```
+
+```
+init() { /* ... */ }
+init(frame: CGRect, style: UITableViewStyle) { /* ... */ }
+```
 
 
-		</section>
-		
+</script>
+</section>
+
+
+<section data-markdown>
+<script type="text/template">
+## Interacting with Objective-C APIs
+
+Initialization, alloc init 할 필요 없음.
+
+```
+UITableView *myTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+```
+
+```
+let myTableView: UITableView = UITableView(frame: CGRectZero, style: .Grouped)
+```
+
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Interacting with Objective-C APIs
+
+Class Factory Methods and Convenience Initializers
+
+```
+UIColor *color = [UIColor colorWithRed:0.5 green:0.0 blue:0.5 alpha:1.0];
+```
+
+```
+let color = UIColor(red: 0.5, green: 0.0, blue: 0.5, alpha: 1.0)
+```
+
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Interacting with Objective-C APIs
+
+Failable Initialization
+
+```
+if let image = UIImage(contentsOfFile: "MyImage.png") {
+    // loaded the image successfully
+} else {
+    // could not load the image
+}
+```
+</script>
+</section>
+
+
+
+
+</section>
+
+<section>
+<section>
+<h2>Importing Objective-C into Swift</h2>
+<p><img src="./images/2.png"></p>
+<p> Objective-C ->Swift : -Bridging-Header.h" </p>		
+<p> Swift -> ObjectiveC : #import "ProductModuleName-Swift.h" </p>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Swift-only features
+* Generics
+* Tuples
+* Enumerations defined in Swift without Int raw value type
+* Structures defined in Swift
+* Top-level functions defined in Swift
+* Global variables defined in Swift
+* Typealiases defined in Swift
+* Swift-style variadics
+* Nested types
+* Curried functions
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Making Objective-C Interfaces Unavailable in Swift
+```
+ (instancetype)collectionWithValues:(NSArray *)values forKeys:(NSArray<NSCopying> *)keys NS_SWIFT_UNAVAILABLE("Use a dictionary literal instead");
+```
+</script>
+</section>
+
+</section>		
+
+
+
 	  </div>
 
 	</div>
