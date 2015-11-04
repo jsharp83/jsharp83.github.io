@@ -1,4 +1,4 @@
-<!doctype html>
+g<!doctype html>
 <html lang="en">
 
   <head>
@@ -186,6 +186,232 @@ let occupations = [:]
 </script>
 </section>
 </section>
+
+<section>
+<section data-markdown>
+<script type="text/template">
+## Control Flow
+if, for-in
+
+```
+let individualScores = [75, 43, 103, 87, 12]
+var teamScore = 0
+for score in individualScores {
+    if score > 50 {
+        teamScore += 3
+    } else {
+        teamScore += 1
+    }
+}
+print(teamScore)
+```
+
+</script>
+
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Control Flow
+for-in, Dictionary
+
+```
+let interestingNumbers = [
+    "Prime": [2, 3, 5, 7, 11, 13],
+    "Fibonacci": [1, 1, 2, 3, 5, 8],
+    "Square": [1, 4, 9, 16, 25],
+]
+var largest = 0
+for (kind, numbers) in interestingNumbers {
+    for number in numbers {
+        if number > largest {
+            largest = number
+        }
+    }
+}
+print(largest)
+
+```
+
+</script>
+
+</section>
+
+<section>
+<h2>Control Flow </h2>
+<p>while, do-while </p>
+<pre><code class="swift">
+var n = 2
+while n < 100 {
+    n = n * 2
+}
+print(n)
+ 
+var m = 2
+repeat {
+    m = m * 2
+} while m < 100
+print(m)
+</code></pre>
+
+</section>
+
+<section>
+<h2>Control Flow </h2>
+<p> for range </p>
+<pre><code class="swift">
+var firstForLoop = 0
+for i in 0..<4 {
+    firstForLoop += i
+}
+print(firstForLoop)
+ 
+var secondForLoop = 0
+for var i = 0; i < 4; ++i {
+    secondForLoop += i
+}
+print(secondForLoop)
+
+</code></pre>
+
+</section>
+
+
+
+
+</section>
+
+<section>
+<section data-markdown>
+<script type="text/template">
+## Optional
+```
+var optionalString: String? = "Hello"
+print(optionalString == nil)
+ 
+var optionalName: String? = "John Appleseed"
+var greeting = "Hello!"
+if let name = optionalName {
+    greeting = "Hello, \(name)"
+}
+```
+
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Optional
+```
+let nickName: String? = nil
+let fullName: String = "John Appleseed"
+let informalGreeting = "Hi \(nickName ?? fullName)"
+
+```
+
+</script>
+</section>
+
+
+<section data-markdown>
+<script type="text/template">
+## Switch, Optional
+```
+let vegetable = "red pepper"
+switch vegetable {
+case "celery":
+    print("Add some raisins and make ants on a log.")
+case "cucumber", "watercress":
+    print("That would make a good tea sandwich.")
+case let x where x.hasSuffix("pepper"):
+    print("Is it a spicy \(x)?")
+default:
+    print("Everything tastes good in soup.")
+}
+
+```
+
+</script>
+</section>
+
+
+
+</section>
+
+<section>
+<section data-markdown>
+<script type="text/template">
+## Functions and Closures
+
+```
+func greet(name: String, day: String) -> String {
+    return "Hello \(name), today is \(day)."
+}
+greet("Bob", day: "Tuesday")
+```
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Functions and Closures
+Tuple return
+
+```
+func calculateStatistics(scores: [Int]) -> (min: Int, max: Int, sum: Int) {
+    var min = scores[0]
+    var max = scores[0]
+    var sum = 0
+    
+    for score in scores {
+        if score > max {
+            max = score
+        } else if score < min {
+            min = score
+        }
+        sum += score
+    }
+    
+    return (min, max, sum)
+}
+let statistics = calculateStatistics([5, 3, 100, 3, 9])
+print(statistics.sum)
+print(statistics.2)
+```
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Functions and Closures
+arguments 갯수를 지정하지 않기
+
+```
+func sumOf(numbers: Int...) -> Int {
+    var sum = 0
+    for number in numbers {
+        sum += number
+    }
+    return sum
+}
+sumOf()
+sumOf(42, 597, 12)
+```
+</script>
+</section>
+
+
+		</section>
+
+
+ 
+<section>
+<section data-markdown>
+<script type="text/template">
+</script>
+
+</section>
+
 
 		</section>
 		
