@@ -59,6 +59,117 @@ g<!doctype html>
 			</code>
 		  </pre>		  		  
 		</section>
+        
+<section>
+
+<section>
+<h2> Swift 특징 </h2>
+<p>
+Main 함수가존재하지 않습니다.
+</p>
+</section>
+
+<section>
+<h2> Swift 특징 </h2>
+<p>
+문장끝을나타내는세미콜론(;)은선택사항입니다.
+</p>
+</section>
+
+<section>
+<h2> Swift 특징 </h2>
+<p>
+변수와 상수를 선언하는 새로운 키워드가도입되었고, 형식추론을 지원합니다.
+</p>
+<pre>
+<code class="swift">
+var name: String= "James"
+let max = 100
+</code>
+</pre>
+</section>
+
+<section>
+    <h2> Swift 특징 </h2>
+    <p>
+    변수나 상수의이름에서유니코드문자를자유롭게사용할수있습니다.
+    </p>
+</section>
+
+<section>
+    <h2> Swift 특징 </h2>
+    <p>
+    문자열과문자는모두큰따옴표를사용해서표현합니다.
+    </p>
+    <pre>
+        <code class="swift">
+            var str = "string"
+            var char:Character = "c"
+        </code>
+    </pre>
+</section>
+
+<section>
+    <h2> Swift 특징 </h2>
+    <p>
+    확장 가능한 새로운 이름의 자료형을 제공합니다.(Extention)
+    </p>
+</section>
+
+<section>
+    <h2> Swift 특징 </h2>
+    <p>
+    헤더파일이 사라지고 하나의 swift 파일에 선언과 구현을 모두 작성합니다.
+    </p>
+</section>
+
+<section>
+    <h2> Swift 특징 </h2>
+    <p>
+    서브스크립트 문법을 다양한 자료형에서 사용할 수 있습니다.
+    
+    </p>
+    <pre>
+<code class="swift">
+class MyClass{
+    let data= ["iPhone", "iPad", "iPod", "Mac Pro"]
+    
+    subscript(index: Int) -> String{
+        return data[index]
+    }
+}
+
+var myClass = MyClass()
+var firstProduct = myClass[0]
+</code>
+    </pre>
+</section>
+
+<section>
+    <h2> Swift 특징 </h2>
+    <p>
+    구조체와 열거형의 기능이 확장되었습니다.
+    </p>
+</section>
+
+<section>
+    <h2> Swift 특징 </h2>
+    <p>
+    "값이없음" 을 나타내는 새로운 방법을 제공합니다.
+    </p>
+<pre>
+<code class ="swift">
+    var userName: String? = ....
+    if let userName = ....{
+    
+    }
+</code>
+</pre>
+    
+</section>
+
+    
+</section>
 
 		<section>
 		  <section data-markdown>
@@ -202,6 +313,39 @@ let occupations = [:]
 ```
 </script>
 </section>
+
+<section data-markdown>
+    <script type="text/template">
+        ## Array, Dictionary
+        배열더하기연산
+        
+        ```
+        let productNames = ["iPhone", "iPad", "Mac Pro"]
+        let platforms = ["iOS", "Mac"]
+        let combinedArray = productNames + platforms
+        ```
+        </script>
+</section>
+
+<section data-markdown>
+    <script type="text/template">
+        ## Array, Dictionary
+        enumerate
+        
+        ```
+        var productNames = ["iPhone", "iPad", "Mac Pro", "iPad", "Macbook Pro"]
+        
+        for (index, name) in productNames.enumerate(){
+            print("\(index) : \(name)")
+            
+        }
+        
+        ```
+        </script>
+</section>
+
+
+
 </section>
 
 <section>
