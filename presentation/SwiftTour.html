@@ -1255,6 +1255,86 @@ if let image = UIImage(contentsOfFile: "MyImage.png") {
 </script>
 </section>
 
+<section data-markdown>
+<script type="text/template">
+## Interacting with Objective-C APIs
+        
+Accessing Properties
+
+* 공통적으로 있음
+  * nonnull, nullable, null_resettable
+  * readonly -> { get }
+  * weak, copy, strong -> weak, copy, strong var
+
+* ObjectiveC 에만 있음
+  * atomic, nonatomic -> Objective C
+  * getter=, setter= -> Objective C
+  
+</script>
+</section>
+
+<section data-markdown>
+    <script type="text/template">
+        ## Interacting with Objective-C APIs
+        
+        Working with methods
+
+```
+myTextField.textColor = UIColor.darkGrayColor()
+myTextField.text = "Hello world"
+```
+
+```
+[myTableView insertSubview:mySubview atIndex:2];
+```
+```
+myTableView.insertSubview(mySubview, atIndex: 2)
+myTableView.layoutIfNeeded()
+```
+        </script>
+</section>
+
+<section data-markdown>
+    <script type="text/template">
+        ## Interacting with Objective-C APIs
+        
+        id Compatibility
+        
+```
+var myObject: AnyObject = UITableViewCell()
+myObject = NSDate()
+
+// Type casting 없이 쓸 수 있다
+let futureDate = myObject.dateByAddingTimeInterval(10)
+let timeSinceNow = myObject.timeIntervalSinceNow
+
+// 없는 함수를 호출하면 크래쉬
+myObject.characterAtIndex(5)
+
+```
+        </script>
+</section>
+
+<section data-markdown>
+    <script type="text/template">
+        ## Interacting with Objective-C APIs
+        
+        id Compatibility
+        
+        ```
+        // myObject has AnyObject type and NSDate value
+        let myCount = myObject.count
+        // myCount has Int? type and nil value
+        let myChar = myObject.characterAtIndex?(5)
+        // myChar has unichar? type and nil value
+        if let fifthCharacter = myObject.characterAtIndex?(5) {
+            print("Found \(fifthCharacter) at index 5")
+        }
+    // conditional branch not executed
+        
+        ```
+        </script>
+</section>
 
 
 
