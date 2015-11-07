@@ -18,10 +18,10 @@ JNIEXPORT jstring JNICALL Java_com_eunchuljeon_opencvndktest_MainActivity_getStr
 /*
  * Class:     com_eunchuljeon_opencvndktest_MainActivity
  * Method:    getGrayImages
- * Signature: (Ljava/util/ArrayList;)Ljava/lang/String;
+ * Signature: (JJ)I
  */
-JNIEXPORT jstring JNICALL Java_com_eunchuljeon_opencvndktest_MainActivity_getGrayImages
-  (JNIEnv *, jobject, jobject);
+JNIEXPORT jint JNICALL Java_com_eunchuljeon_opencvndktest_MainActivity_getGrayImages
+  (JNIEnv *, jobject, jlong, jlong);
 
 #ifdef __cplusplus
 }

@@ -36,7 +36,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public native String getStringFromNative();
-    public native String getGrayImages(ArrayList<Bitmap> sourceImages);
+    public native int getGrayImages(long matAddrRgba, long matAddrGray);
+
+    private Mat mRgba;
+    private Mat mGray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,18 +88,32 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Make gray image using OpenCV");
 
         Bitmap image = BitmapFactory.decodeResource(getResources(),R.drawable.test);
-        ArrayList<Bitmap> imageList = new ArrayList();
-        imageList.add(image);
+        mRgba = new Mat( image.getHeight(), image.getWidth(), CvType.CV_8U, new Scalar(4));
+        mGray = new Mat( image.getHeight(), image.getWidth(), CvType.CV_8U, new Scalar(1));
+        Utils.bitmapToMat(image, mRgba);
 
-        String receivedStr = getGrayImages(imageList);
+        int result = getGrayImages(mRgba.getNativeObjAddr(), mGray.getNativeObjAddr());
         TextView view2 = (TextView) findViewById(R.id.textView);
-        view2.setText(receivedStr);
+        String resultStr = String.valueOf(result);
+        view2.setText(resultStr);
 
-        Mat imageMat = new Mat( image.getHeight(), image.getWidth(), CvType.CV_8U, new Scalar(4));
-        Utils.bitmapToMat(image, imageMat);
-        cvtColor(imageMat, imageMat, COLOR_RGBA2GRAY);
-        Utils.matToBitmap(imageMat, image);
+        Utils.matToBitmap(mGray, image);
         ImageView imageView = (ImageView) findViewById(R.id.imageView1);
         imageView.setImageBitmap(image);
+
+//        ArrayList<Mat> receivedMat = getGrayImages(imageList);
+//        Utils.matToBitmap(receivedMat.get(0), image);
+//        ImageView imageView = (ImageView) findViewById(R.id.imageView1);
+//        imageView.setImageBitmap(image);
+
+//        TextView view2 = (TextView) findViewById(R.id.textView);
+//        view2.setText(receivedStr);
+
+//        Mat imageMat = new Mat( image.getHeight(), image.getWidth(), CvType.CV_8U, new Scalar(4));
+//        Utils.bitmapToMat(image, imageMat);
+//        cvtColor(imageMat, imageMat, COLOR_RGBA2GRAY);
+//        Utils.matToBitmap(imageMat, image);
+//        ImageView imageView = (ImageView) findViewById(R.id.imageView1);
+//        imageView.setImageBitmap(image);
     }
 }
