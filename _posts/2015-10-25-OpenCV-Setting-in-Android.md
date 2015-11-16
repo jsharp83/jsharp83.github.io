@@ -178,7 +178,7 @@ NDK_PROJECT_PATH=$ModuleFileDir$/build/intermediates/ndk NDK_LIBS_OUT=$ModuleFil
 
 4. Change the MainActivity.java to use OpenCV
 
-{% highlight java lineanchors %}
+{% highlight java %}
 public class MainActivity extends AppCompatActivity {
 
 static{
