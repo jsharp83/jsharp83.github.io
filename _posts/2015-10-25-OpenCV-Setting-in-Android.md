@@ -38,17 +38,19 @@ If you want to use OpenCV library in Android, You should download and install fo
 
 3. Make .cpp file in jni folder. And make c++ code.
 
-```
+```cpp
 #include "com_eunchuljeon_opencvndktest_MainActivity.h"
+
 JNIEXPORT jstring JNICALL Java_com_eunchuljeon_opencvndktest_MainActivity_getStringFromNative(JNIEnv *env, jobject){
     return env->NewStringUTF("hello jni !");
 }
+
 ```
 
 4. Make Android.mk and Application.mk in jni folder. LOCAL_MODULE need to same with System.loadLibrary("OpenCVNDKTest"); in MainActivity.java, LOCAL_SRC_FILE need to same with your cpp file.
   * Android.mk
 
-```
+```bash
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 LOCAL_MODULE    := OpenCVNDKTest
@@ -60,7 +62,7 @@ include $(BUILD_SHARED_LIBRARY)
 
   *	Application.mk
 
-```
+```bash
 APP_ABI=all
 
 ```
