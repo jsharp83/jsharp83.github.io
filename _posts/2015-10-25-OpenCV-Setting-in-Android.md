@@ -178,7 +178,7 @@ NDK_PROJECT_PATH=$ModuleFileDir$/build/intermediates/ndk NDK_LIBS_OUT=$ModuleFil
 
 4. Change the MainActivity.java to use OpenCV
 
-{% highlight java %}
+```
 public class MainActivity extends AppCompatActivity {
 
 static{
@@ -200,7 +200,7 @@ public void makeGrayImage(View view){
     ImageView imageView = (ImageView) findViewById(R.id.imageView1);
     imageView.setImageBitmap(image);
 }
-{% endhighlight %}
+```
 
 5. You can get gray image using OpenCV library like following screenshot.
 ![sc13.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc13.png)
