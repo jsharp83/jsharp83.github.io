@@ -44,7 +44,6 @@ If you want to use OpenCV library in Android, You should download and install fo
 JNIEXPORT jstring JNICALL Java_com_eunchuljeon_opencvndktest_MainActivity_getStringFromNative(JNIEnv *env, jobject){
     return env->NewStringUTF("hello jni !");
 }
-
 ```
 
 4. Make Android.mk and Application.mk in jni folder. LOCAL_MODULE need to same with System.loadLibrary("OpenCVNDKTest"); in MainActivity.java, LOCAL_SRC_FILE need to same with your cpp file.
@@ -57,14 +56,12 @@ LOCAL_MODULE    := OpenCVNDKTest
 LOCAL_SRC_FILES := main.cpp
 LOCAL_LDLIBS := -llog
 include $(BUILD_SHARED_LIBRARY)
-
 ```
 
   *	Application.mk
 
 ```bash
 APP_ABI=all
-
 ```
 
 5. You should change the gradle setting for using NDK.
@@ -74,7 +71,7 @@ APP_ABI=all
   ![sc9.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc9.png)
   * change build.gradle like following. If you have more information about this, see this [link](http://hujiaweibujidao.github.io/blog/2014/10/22/android-ndk-and-opencv-development-with-android-studio/)
 
-```
+```bash
 apply plugin: 'com.android.application'
 
 android {
@@ -97,7 +94,7 @@ android {
 
 6. change content_main.xml and MainActivity,java.
 
-```
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
@@ -145,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
 ```
 
-7. If you see 'hello-jni' string on your simulator, it is end of NDK setting.
+7. If you see 'hello-jni' string on your simulator, it is end of NDK setting.
 ![sc10.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc10.png)
 
 ## OpenCV Setting
