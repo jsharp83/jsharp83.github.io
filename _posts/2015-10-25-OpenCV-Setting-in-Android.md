@@ -200,7 +200,6 @@ public void makeGrayImage(View view){
     ImageView imageView = (ImageView) findViewById(R.id.imageView1);
     imageView.setImageBitmap(image);
 }
-
 {% endhighlight %}
 
 5. You can get gray image using OpenCV library like following screenshot.
