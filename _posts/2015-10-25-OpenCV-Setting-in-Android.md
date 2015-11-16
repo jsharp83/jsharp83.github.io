@@ -37,27 +37,33 @@ If you want to use OpenCV library in Android, You should download and install fo
 **If you don't have a javah in Android Tools tab, see this [link](http://hujiaweibujidao.github.io/blog/2014/10/22/android-ndk-and-opencv-development-with-android-studio/) and read Section 2.4**
 
 3. Make .cpp file in jni folder. And make c++ code.
-{% highlight cpp %}
+
+```
 #include "com_eunchuljeon_opencvndktest_MainActivity.h"
 JNIEXPORT jstring JNICALL Java_com_eunchuljeon_opencvndktest_MainActivity_getStringFromNative(JNIEnv *env, jobject){
-return env->NewStringUTF("hello jni !");
+    return env->NewStringUTF("hello jni !");
 }
-{% endhighlight %}
+```
 
 4. Make Android.mk and Application.mk in jni folder. LOCAL_MODULE need to same with System.loadLibrary("OpenCVNDKTest"); in MainActivity.java, LOCAL_SRC_FILE need to same with your cpp file.
   * Android.mk
-  {% highlight bash %}
+
+```
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 LOCAL_MODULE    := OpenCVNDKTest
 LOCAL_SRC_FILES := main.cpp
 LOCAL_LDLIBS := -llog
 include $(BUILD_SHARED_LIBRARY)
-  {% endhighlight %}
+
+```
+
   *	Application.mk
-  {% highlight bash %}
-    APP_ABI=all
-  {% endhighlight %}
+
+```
+APP_ABI=all
+
+```
 
 5. You should change the gradle setting for using NDK.
   * Add _android.useDeprecatedNdk=true_ in PROJECT_HOME/gradle.properties
@@ -66,29 +72,30 @@ include $(BUILD_SHARED_LIBRARY)
   ![sc9.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc9.png)
   * change build.gradle like following. If you have more information about this, see this [link](http://hujiaweibujidao.github.io/blog/2014/10/22/android-ndk-and-opencv-development-with-android-studio/)
 
-    {% highlight bash %}
+```
 apply plugin: 'com.android.application'
 
 android {
-compileSdkVersion 23
-buildToolsVersion "23.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
 
-defaultConfig {
-applicationId "com.eunchuljeon.opencvndktest"
-minSdkVersion 16
-targetSdkVersion 23
-versionCode 1
-versionName "1.0"
+    defaultConfig {
+        applicationId "com.eunchuljeon.opencvndktest"
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
 
-ndk{
-moduleName "OpenCVNDKTest"
+    ndk{
+        moduleName "OpenCVNDKTest"
+    }
 }
-}
 
-    {% endhighlight %}
+```
 
 6. change content_main.xml and MainActivity,java.
-    {% highlight xml %}
+
+```
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
@@ -103,9 +110,9 @@ tools:showIn="@layout/activity_main" tools:context=".MainActivity">
 <TextView android:id="@+id/textView" android:text="Hello World!" android:layout_width="wrap_content"
 android:layout_height="wrap_content" />
 </RelativeLayout>
-    {% endhighlight %}
+```
 
-    {% highlight java %}
+```
 package com.eunchuljeon.opencvndktest;
 
 import android.os.Bundle;
@@ -119,22 +126,22 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-static {
-System.loadLibrary("hello-jni");
-}
+    static {
+        System.loadLibrary("hello-jni");
+    }
 
-public native String getStringFromNative();
+    public native String getStringFromNative();
 
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-super.onCreate(savedInstanceState);
-setContentView(R.layout.activity_main);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-TextView view = (TextView) findViewById(R.id.textView);
-view.setText(getStringFromNative());
-}
+        TextView view = (TextView) findViewById(R.id.textView);
+        view.setText(getStringFromNative());
+    }
 
-    {% endhighlight %} 
+```
 
 7. If you see 'hello-jni' string on your simulator, it is end of NDK setting.
 ![sc10.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc10.png)
@@ -142,8 +149,8 @@ view.setText(getStringFromNative());
 ## OpenCV Setting
 Following part, this [link](http://hujiaweibujidao.github.io/blog/2014/10/22/android-ndk-and-opencv-development-with-android-studio/) is very helpful for me.
 1. Change the Android.mk in the jni folder. You should set the opencvroot path.
-{% highlight bash %}
 
+```
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
@@ -157,28 +164,30 @@ LOCAL_MODULE    := OpenCVNDKTest
 LOCAL_SRC_FILES := main.cpp
 LOCAL_LDLIBS := -llog
 include $(BUILD_SHARED_LIBRARY)
+```
 
-{% endhighlight %}
 
 2. Add ndk-build tool and build.
-{% highlight %}
+
+```
 NDK_PROJECT_PATH=$ModuleFileDir$/build/intermediates/ndk NDK_LIBS_OUT=$ModuleFileDir$/src/main/jniLibs NDK_APPLICATION_MK=$ModuleFileDir$/src/main/jni/Application.mk APP_BUILD_SCRIPT=$ModuleFileDir$/src/main/jni/Android.mk V=1
-{% endhighlight %}
+```
 ![sc11.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc11.png)
 
 3. Change content_main.xml to show image and button like following image.
 ![sc12.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc12.png)
 
 4. Change the MainActivity.java to use OpenCV
-{% highlight java %}
+
+```
 public class MainActivity extends AppCompatActivity {
 
 static{
-if (!OpenCVLoader.initDebug()) {
-// Handle initialization error
-} else {
-System.loadLibrary("OpenCVNDKTest");
-}
+    if (!OpenCVLoader.initDebug()) {
+        // Handle initialization error
+    } else {
+        System.loadLibrary("OpenCVNDKTest");
+    }
 }
 
 public void makeGrayImage(View view){
@@ -193,7 +202,7 @@ ImageView imageView = (ImageView) findViewById(R.id.imageView1);
 imageView.setImageBitmap(image);
 }
 
-{% endhighlight %}
+```
 
 5. You can get gray image using OpenCV library like following screenshot.
 ![sc13.png](https://raw.githubusercontent.com/jsharp83/jsharp83.github.io/master/images/2015_10_25/sc13.png)
