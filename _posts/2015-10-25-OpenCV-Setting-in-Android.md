@@ -46,7 +46,7 @@ JNIEXPORT jstring JNICALL Java_com_eunchuljeon_opencvndktest_MainActivity_getStr
 }
 
 ```
-
+
 4. Make Android.mk and Application.mk in jni folder. LOCAL_MODULE need to same with System.loadLibrary("OpenCVNDKTest"); in MainActivity.java, LOCAL_SRC_FILE need to same with your cpp file.
   * Android.mk
 
@@ -181,7 +181,7 @@ NDK_PROJECT_PATH=$ModuleFileDir$/build/intermediates/ndk NDK_LIBS_OUT=$ModuleFil
 
 4. Change the MainActivity.java to use OpenCV
 
-```
+```java
 public class MainActivity extends AppCompatActivity {
 
 static{
@@ -193,15 +193,15 @@ static{
 }
 
 public void makeGrayImage(View view){
-System.out.println("Make gray image using OpenCV");
+    System.out.println("Make gray image using OpenCV");
 
-Bitmap image = BitmapFactory.decodeResource(getResources(),R.drawable.test);
-Mat imageMat = new Mat( image.getHeight(), image.getWidth(), CvType.CV_8U, new Scalar(4));
-Utils.bitmapToMat(image, imageMat);
-cvtColor(imageMat, imageMat, COLOR_RGBA2GRAY);
-Utils.matToBitmap(imageMat, image);
-ImageView imageView = (ImageView) findViewById(R.id.imageView1);
-imageView.setImageBitmap(image);
+    Bitmap image = BitmapFactory.decodeResource(getResources(),R.drawable.test);
+    Mat imageMat = new Mat( image.getHeight(), image.getWidth(), CvType.CV_8U, new Scalar(4));
+    Utils.bitmapToMat(image, imageMat);
+    cvtColor(imageMat, imageMat, COLOR_RGBA2GRAY);
+    Utils.matToBitmap(imageMat, image);
+    ImageView imageView = (ImageView) findViewById(R.id.imageView1);
+    imageView.setImageBitmap(image);
 }
 
 ```
