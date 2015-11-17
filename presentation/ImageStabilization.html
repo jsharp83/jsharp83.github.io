@@ -54,12 +54,15 @@
           <p>
           0.25 sec, 7장의 연속사진
           </p>
+          <p>
+          <img width="500" height="500" src="./images/imageStabilization/1.gif">
+</p>
 		</section>
         <section>
             <h2> Loopic </h2>
                 <p class="fragment"> ... 근데 떨림이 심하다. </p>
             <p>
-            <img width="500" height="500" src="./images/imageStabilization/1.gif">
+            <img width="500" height="500" src="./images/imageStabilization/2.gif">
                 </p>
         </section>
 </section>
@@ -73,12 +76,14 @@
         <h2> 제약사항 파악 </h2>
         <p class="fragment"> Real-time ? </p>
         <p class="fragment"> Iterative ? </p>
+        <p class="fragment"> 떨림 정도 ?</p>
         <p class="fragment"> 개발 기간 ? </p>
     </section>
     <section>
         <h2> 제약사항 파악 </h2>
         <p> Real-time -> 필요 없음. </p>
         <p> Iterative -> 필요 없음. </p>
+        <p> 떨림 정도 -> 신경 안씀. </p>
         <p> 개발 기간 -> 아무도 신경안씀. </p>
     </section>
     <section>
@@ -86,6 +91,66 @@
         <p> <small>최대한 간단하게 구현해보자! </small> </p>
         <p class="fragment">간단한건 아는게 많을 때 가능하다.</p>
     </section>
+</section>
+
+<section>
+    <section>
+        <h2> Process </h2>
+        <p> 이미지가 떨린다?? </p>
+        <p class="fragment"> 각 이미지가 이동한 만큼 되돌려주면 되지 않는가?</p>
+        <p class="fragment"> 얼마나 이동했는지 어떻게 아는가?</p>
+        <p class="fragment"> 전에 나왔던 것이 다음장에 어디에 나오는지 보면 되지않나?</p>
+    </section>
+    
+    <section data-markdown>
+        <script type="text/template">
+            ## Process
+* 각 이미지에서 특징점을 뽑는다.
+* 특징점들 중 같은 특징점을 찾는다.
+* 같은 특징점들이 얼마나 이동했나를 가지고 이동을 추정(estimate) 한다
+        </script>
+    </section>
+</section>
+<section>
+    <h2> 주의사항 </h2>
+    <p class="fragment"> 이것은 최선이 아닐 수 있습니다. </p>
+</section>
+<section>
+    <section>
+        <h2> 특징점 뽑기(Feature extraction) </h2>
+        <img src="./images/imageStabilization/3.png">
+    </section>
+    <section>
+        <h2> SSD(sum of squared difference), Moravec80 </h2>
+        <img src="./images/imageStabilization/4.png">
+    </section>
+    <section>
+        Moravec80 -> Harris Corner(Harris88) -> SIFT(Scale invariant feature Transform, Lowe2004)
+    </section>
+    <section>
+        <p> SIFT라는걸 구해서 쓰자.....? </p>
+        <p class="fragment"> 특허가 있음. 일단 더 발전된 BRISK 라는걸 써보자.</p>
+    </section>
+    <section data-markdown>
+        <script type="text/template">
+            ## BRISK, OpenCV
+
+```cpp
+void extractFeatureUsingBRISK(Mat& imageMat, vector<KeyPoint>& keyPoints, Mat& descriptor){
+    // Set brisk parameters
+    int Threshl=20;
+    int Octaves=3; //(pyramid layer) from which the keypoint has been extracted
+    float PatternScales=1.0f;
+    
+    cv::Ptr<cv::FeatureDetector> detactor = cv::BRISK::create(Threshl, Octaves, PatternScales);
+    detactor->detectAndCompute(imageMat, noArray(), keyPoints, descriptor);
+}
+
+```
+            </script>
+    </section>
+    
+    
 </section>
 
 
