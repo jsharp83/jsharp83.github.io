@@ -44,468 +44,49 @@
 		<section>
 		  <h2>Image stabilization</h2>
 		  <p>
-            <small>폴라개발 전은철</small>
+          폴라개발, 전은철
 		  </p>
 		</section>
 
 <section>
 		<section>
-		  <h2> About OpenGL ES</h2>
+		  <h2> Loopic </h2>
           <p>
-            <small>The Open Graphics Library (OpenGL) is used for visualizing 2D and 3D data.</small>
+          0.25 sec, 7장의 연속사진
           </p>
-          <p>
-            <small>OpenGL for Embedded Systems (OpenGL ES) is a simplified version of OpenGL</small>
-          </p>
-		  <p>
-			<img src="./images/opengles/1.png">
-		  </p>
 		</section>
-
-
-
-<section data-markdown>
-<script type="text/template">
-
-## iOS provides several higher-level frameworks:
-
-* Sprite Kit, for creating 2D Game
-* Core Image, realtime filtering and analysis for still and video images
-* Core Animation, graphics rendering and animation infrastructure
-* Cocoa Touch, User Interfaces
-
-</script>
-</section>
-
-<section data-markdown>
-    <script type="text/template">
-        ## OpenGL ES Is a Platform-Neutral API Implemented in iOS
-        
-        OpenGL ES is a C-based API
-        </script>
-</section>
-
-<section data-markdown>
-    <script type="text/template">
-        ## GLKit Provides a Drawing Surface and Animation Support
-        
-        When you develop an OpenGL ES app, you use a GLKView object to render your OpenGL ES content.
-        </script>
-</section>
-
-<section data-markdown>
-    <script type="text/template">
-        ## Apps require additional performance tuning
-        </script>
-</section>
-
+        <section>
+            <h2> Loopic </h2>
+                <p class="fragment"> ... 근데 떨림이 심하다. </p>
+            <p>
+            <img width="500" height="500" src="./images/imageStabilization/1.gif">
+                </p>
+        </section>
 </section>
 
 <section>
-
-<section data-markdown>
-    <script type="text/template">
-        ## Checklist for Building OpenGL ES Apps
-        
-        Choosing a Rendering Destination
-        
-        * ES 3.0  is new in iOS7, General-purpose GPU computing techniques
-        * ES 2.0, Programmable shaders
-        * ES 1.1, basic fixed-function graphics pipeline
-        
-        </script>
+    <section>
+        <h2> Image stabilization </h2>
+        <p> Hardware, Software </p>
+    </section>
+    <section>
+        <h2> 제약사항 파악 </h2>
+        <p class="fragment"> Real-time ? </p>
+        <p class="fragment"> Iterative ? </p>
+        <p class="fragment"> 개발 기간 ? </p>
+    </section>
+    <section>
+        <h2> 제약사항 파악 </h2>
+        <p> Real-time -> 필요 없음. </p>
+        <p> Iterative -> 필요 없음. </p>
+        <p> 개발 기간 -> 아무도 신경안씀. </p>
+    </section>
+    <section>
+        <h2> 제약사항 파악 </h2>
+        <p> <small>최대한 간단하게 구현해보자! </small> </p>
+        <p class="fragment">간단한건 아는게 많을 때 가능하다.</p>
+    </section>
 </section>
-
-<section data-markdown>
-    <script type="text/template">
-        ## Specific Version of OpenGL ES
-
-```
-EAGLContext* CreateBestEAGLContext()
-{
-    EAGLContext *context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
-    if (context == nil) {
-        context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-    }
-    return context;
-}
-    
-```
-        
-        </script>
-</section>
-
-<section data-markdown>
-    <script type="text/template">
-        ## EAGL Sharegroup
-        <img src="./images/opengles/2.png">
-
-```
-EAGLContext* firstContext = CreateBestEAGLContext();
-EAGLContext* secondContext = [[EAGLContext alloc] initWithAPI:[firstContext API] sharegroup: [firstContext sharegroup]];
-```
-    
-        </script>
-</section>
-
-</section>
-
-<section>
-<section>
-    <h2> Drawing with OpenGL ES and GLKit</h2>
-    <p><img src="./images/opengles/3.png"></p>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-
-## Drawing with OpenGL ES and GLKit
-
-Creating and Configuring a GLKit View
-            
-```
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    // Create an OpenGL ES context and assign it to the view loaded from storyboard
-    GLKView *view = (GLKView *)self.view;
-    view.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-    
-    // Configure renderbuffers created by the view
-    view.drawableColorFormat = GLKViewDrawableColorFormatRGBA8888;
-    view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
-    view.drawableStencilFormat = GLKViewDrawableStencilFormat8;
-    
-    // Enable multisampling
-    view.drawableMultisample = GLKViewDrawableMultisample4X;
-}
-```
-
-</script>
-</section>
-
-<section data-markdown>
-    <script type="text/template">
-        
-## Depth buffer, Stencil buffer
-
-<img src="https://open.gl/media/img/c5_stencil.png">
-
-https://open.gl/depthstencils
-
-</script>
-</section>
-
-
-<section data-markdown>
-<script type="text/template">
-        
-## Drawing with a GLKit view
-
-
-```
-- (void)drawRect:(CGRect)rect
-{
-    // Clear the framebuffer
-    glClearColor(0.0f, 0.0f, 0.1f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-    // Draw using previously configured texture, shader, uniforms, and vertex array
-    glBindTexture(GL_TEXTURE_2D, _planetTexture);
-    glUseProgram(_diffuseShading);
-    glUniformMatrix4fv(_uniformModelViewProjectionMatrix, 1, 0, _modelViewProjectionMatrix.m);
-    glBindVertexArrayOES(_planetMesh);
-    glDrawElements(GL_TRIANGLE_STRIP, 256, GL_UNSIGNED_SHORT);
-}
-
-```
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-    
-## GLKView
-
-* Before invoking your drawing method, the view:
-    * Makes its EAGLContext object the current context
-    * Creates a framebuffer object and renderbuffers based on its current size, scale factor, and drawable properties (if needed)
-    * Binds the framebuffer object as the current destination for drawing commands
-    * Sets the OpenGL ES viewport to match the framebuffer size
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-## GLKView
-
-* After your drawing method returns, the view:
-    * Resolves multisampling buffers (if multisampling is enabled)
-    * Discards renderbuffers whose contents are no longer needed
-    * Presents renderbuffer contents to Core Animation for caching and display
-</script>
-</section>
-
-
-<section data-markdown>
-<script type="text/template">
-## Rendering using a delegate object
-
-Adopts the GLKViewDelegate, glkView:drawInRect
-
-```
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    // Create a context so we can test for features
-    EAGLContext *context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-    [EAGLContext setCurrentContext:context];
-    
-    // Choose a rendering class based on device features
-    GLint maxTextureSize;
-    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
-    if (maxTextureSize > 2048)
-        self.renderer = [[MyBigTextureRenderer alloc] initWithContext:context];
-    else
-        self.renderer = [[MyRenderer alloc] initWithContext:context];
-    
-    // Make the renderer the delegate for the view loaded from the main storyboard
-    GLKView *view = (GLKView *)self.window.rootViewController.view;
-    view.delegate = self.renderer;
-    
-    // Give the OpenGL ES context to the view so it can draw
-    view.context = context;
-    
-    return YES;
-}
-```
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-
-## The animation loop
-
-<p><img src="./images/opengles/4.png"></p>
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-    
-## The animation loop
-
-```objc
-@implementation PlanetViewController // subclass of GLKViewController
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    // Create an OpenGL ES context and assign it to the view loaded from storyboard
-    GLKView *view = (GLKView *)self.view;
-    view.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-    
-    // Set animation frame rate
-    self.preferredFramesPerSecond = 60;
-    
-    // Not shown: load shaders, textures and vertex arrays, set up projection matrix
-    [self setupGL];
-}
-
-- (void)update
-{
-    _rotation += self.timeSinceLastUpdate * M_PI_2; // one quarter rotation per second
-    
-    // Set up transform matrices for the rotating planet
-    GLKMatrix4 modelViewMatrix = GLKMatrix4MakeRotation(_rotation, 0.0f, 1.0f, 0.0f);
-    _normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix), NULL);
-    _modelViewProjectionMatrix = GLKMatrix4Multiply(_projectionMatrix, modelViewMatrix);
-}
-
-- (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
-{
-    // Clear the framebuffer
-    glClearColor(0.0f, 0.0f, 0.1f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-    // Set shader uniforms to values calculated in -update
-    glUseProgram(_diffuseShading);
-    glUniformMatrix4fv(_uniformModelViewProjectionMatrix, 1, 0, _modelViewProjectionMatrix.m);
-    glUniformMatrix3fv(_uniformNormalMatrix, 1, 0, _normalMatrix.m);
-    
-    // Draw using previously configured texture and vertex array
-    glBindTexture(GL_TEXTURE_2D, _planetTexture);
-    glBindVertexArrayOES(_planetMesh);
-    glDrawElements(GL_TRIANGLE_STRIP, 256, GL_UNSIGNED_SHORT, 0);
-}
-
-@end
-
-```
-</script>
-</section>
-</section>
-
-<section>
-
-<section data-markdown>
-<script type="text/template">
-## Drawing to other rendering destinations
-    
-<p>
-<img src="./images/opengles/5.png">
-</p>
-
-Framebuffer objects are the destination for rendering commands.
-
-</script>
-</section>
-
-<section data-markdown>
-    <script type="text/template">
-        ## Creating a framebuffer object
-        
-        * To use the framebuffer for offscreen image processing, attach a renderbuffer
-        * To use the framebuffer image as an input to a later rendering step, attach a texture
-        * To use the framebuffer in a Core Animation layer composition, use a special Core Animation–aware renderbuffer.
-
-    </script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-## Creating Offscreen framebuffer objects
-        
-* Create the framebuffer and bind it
-
-```
-GLuint framebuffer;
-glGenFramebuffers(1, &framebuffer);
-glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-
-```
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-
-## Creating Offscreen framebuffer objects
-        
-* Create, allocate, attach color renderbuffer
-
-```
-GLuint colorRenderbuffer;
-glGenRenderbuffers(1, &colorRenderbuffer);
-glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer);
-glRenderbufferStorage(GL_RENDERBUFFER, GL_RGBA8, width, height);
-glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, colorRenderbuffer);
-
-```
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-    
-## Creating Offscreen framebuffer objects
-
-* Create, allocate, attach a depth or depth/stencil renderbuffer
-        
-
-```
-GLuint depthRenderbuffer;
-glGenRenderbuffers(1, &depthRenderbuffer);
-glBindRenderbuffer(GL_RENDERBUFFER, depthRenderbuffer);
-glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
-glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderbuffer);
-
-```
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-## Using Framebuffer Objects to Render to a Texture
-        
-```
-// create the texture
-GLuint texture;
-glGenTextures(1, &texture);
-glBindTexture(GL_TEXTURE_2D, texture);
-glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8,  width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
-
-```
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-
-## Rendering to a core animation
-
-<img src="./images/opengles/6.png">
-
-</script>
-</section>
-
-<section data-markdown>
-<script type="text/template">
-    
-## Rendering to a core animation
-        
-```
-GLuint colorRenderbuffer;
-glGenRenderbuffers(1, &colorRenderbuffer);
-glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer);
-[myContext renderbufferStorage:GL_RENDERBUFFER fromDrawable:myEAGLLayer];
-glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, colorRenderbuffer);
-
-```
-</script>
-</section>
-</section>
-
-<section>
-<section>
-<h2>OpenGL ES as a Graphics Pipeline</h2>
-<img src="./images/opengles/7.png">
-</section>
-
-<section>
-    <h2>Multiple render targets</h2>
-    <img src="./images/opengles/8.png">
-</section>
-
-<section data-markdown>
-
-<script type="text/template">
-    
-## Setting up multiple render targets
-        
-```
-// Attach (previously created) textures to the framebuffer.
-glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _colorTexture, 0);
-glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, _positionTexture, 0);
-glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, _normalTexture, 0);
-glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, _depthTexture, 0);
-
-// Specify the framebuffer attachments for rendering.
-GLenum targets[] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2};
-glDrawBuffers(3, targets);
-
-```
-</script>
-</section>
-
-
-
-</section>
-
 
 
 
