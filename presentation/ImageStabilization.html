@@ -128,6 +128,11 @@
         Moravec80 -> Harris Corner(Harris88) -> SIFT(Scale invariant feature Transform, Lowe2004)
     </section>
     <section>
+    <h2> Descriptor 생성 </h2>
+    <p><img src="./images/imageStabilization/5.png"></p>
+    <p>(SIFT Descriptor, Lowe 2004)</p>
+    </section>
+    <section>
         <p> SIFT라는걸 구해서 쓰자.....? </p>
         <p class="fragment"> 특허가 있음. 일단 더 발전된 BRISK 라는걸 써보자.</p>
     </section>
@@ -149,12 +154,48 @@ void extractFeatureUsingBRISK(Mat& imageMat, vector<KeyPoint>& keyPoints, Mat& d
 ```
             </script>
     </section>
-    
-    
+    <section>
+        <h2> Feature Extraction 결과</h2>
+        <p>
+            <img width=300 height=300 src="./images/imageStabilization/result/1.gif">
+            <img width=300 height=300 src="./images/imageStabilization/result/2.gif">
+        </p>
+    </section>
 </section>
 
+<section>
+<section>
+    <h2> Feature Matching </h2>
+    <p> 어떤 점이 다음 이미지 들에서 어디에 위치하는가. </p>
+    <p><img width=300 height=300 src="./images/imageStabilization/result/2.gif"></p>
+</section>
 
+<section>
+    <h2> Feature Matching </h2>
+    <p> Descriptor, Euclidean Distance, Mahalanobis Distance, Kd-Tree, Hashing, etc....</p>
+</section>
 
+<section data-markdown>
+    <script type="text/template">
+## OpenCV를 이용한 Feature Matching
+
+```cpp
+cv::BFMatcher matcher(cv::NORM_HAMMING);
+std::vector< std::vector<DMatch> > nn_matches;
+matcher.knnMatch(descriptorsA, descriptorsB, nn_matches, 2);
+```
+</script>
+</section>
+
+<section>
+    <h2> Feature Matching 결과 </h2>
+    <p>
+        <img width=300 height=300 src="./images/imageStabilization/result/2.gif">
+        <img width=300 height=300 src="./images/imageStabilization/result/3.gif">
+    </p>
+</section>
+
+</section>
 
 </div>
 </div>
