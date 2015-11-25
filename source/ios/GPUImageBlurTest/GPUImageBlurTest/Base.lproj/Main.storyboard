@@ -38,8 +38,32 @@
                                     <action selector="clickOnBlurUsingCIFilter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VjA-ay-RhS"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AYe-EA-7Da" userLabel="Gray Image">
+                                <rect key="frame" x="368" y="100" width="78" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Gray Image"/>
+                                <connections>
+                                    <action selector="clickOnGray:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ijE-H8-hO2"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SQ8-0i-N1Y" userLabel="HarrisCorner">
+                                <rect key="frame" x="368" y="140" width="93" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Harris Corner"/>
+                                <connections>
+                                    <action selector="clickOnHarrisCorner:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XR3-cJ-Mup"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N1Z-S9-pXD" userLabel="FASTCorner">
+                                <rect key="frame" x="368" y="180" width="88" height="30"/>
+                                <animations/>
+                                <state key="normal" title="FAST Corner"/>
+                                <connections>
+                                    <action selector="clickOnFASTCorner:" destination="BYZ-38-t0r" eventType="touchUpInside" id="67q-We-cq9"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m1z-wc-Syl">
-                                <rect key="frame" x="368" y="100" width="39" height="30"/>
+                                <rect key="frame" x="368" y="220" width="39" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Reset"/>
                                 <connections>
@@ -53,18 +77,24 @@
                             <constraint firstItem="m1z-wc-Syl" firstAttribute="leading" secondItem="mJK-UH-q3p" secondAttribute="leading" id="0QB-1l-Wj2"/>
                             <constraint firstItem="mJK-UH-q3p" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="1Jf-SU-OM8"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9Ej-mw-ktH" secondAttribute="trailing" id="2FS-bH-fJj"/>
-                            <constraint firstItem="m1z-wc-Syl" firstAttribute="top" secondItem="mJK-UH-q3p" secondAttribute="bottom" constant="10" id="4Lh-UP-25y"/>
+                            <constraint firstItem="N1Z-S9-pXD" firstAttribute="bottom" secondItem="m1z-wc-Syl" secondAttribute="top" constant="-10" id="Clw-KO-rqb"/>
                             <constraint firstItem="9Ej-mw-ktH" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="JUt-Ci-7Qq"/>
+                            <constraint firstItem="SQ8-0i-N1Y" firstAttribute="top" secondItem="AYe-EA-7Da" secondAttribute="bottom" constant="10" id="LhB-xa-oXI"/>
                             <constraint firstAttribute="trailingMargin" secondItem="mJK-UH-q3p" secondAttribute="trailing" constant="20" id="R2h-Yv-cs4"/>
+                            <constraint firstItem="m1z-wc-Syl" firstAttribute="top" secondItem="AYe-EA-7Da" secondAttribute="bottom" constant="10" id="Vxv-4F-92i"/>
+                            <constraint firstItem="N1Z-S9-pXD" firstAttribute="top" secondItem="SQ8-0i-N1Y" secondAttribute="bottom" constant="10" id="WFB-zu-RIY"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="9Ej-mw-ktH" secondAttribute="bottom" id="WYY-CX-RF0"/>
                             <constraint firstItem="jNM-mD-Mgb" firstAttribute="leading" secondItem="mJK-UH-q3p" secondAttribute="leading" id="dLt-f7-efn"/>
-                            <constraint firstItem="m1z-wc-Syl" firstAttribute="top" secondItem="jNM-mD-Mgb" secondAttribute="bottom" constant="10" id="e4o-mb-UK7"/>
+                            <constraint firstItem="AYe-EA-7Da" firstAttribute="top" secondItem="jNM-mD-Mgb" secondAttribute="bottom" constant="10" id="fel-Ye-PzI"/>
                             <constraint firstItem="9Ej-mw-ktH" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="hWE-4V-870"/>
                             <constraint firstItem="jNM-mD-Mgb" firstAttribute="top" secondItem="mJK-UH-q3p" secondAttribute="bottom" constant="10" id="l2Y-hM-dc2"/>
+                            <constraint firstItem="AYe-EA-7Da" firstAttribute="leading" secondItem="jNM-mD-Mgb" secondAttribute="leading" id="ohV-Gu-fps"/>
+                            <constraint firstItem="N1Z-S9-pXD" firstAttribute="leading" secondItem="SQ8-0i-N1Y" secondAttribute="leading" id="qez-hT-5Xf"/>
+                            <constraint firstItem="SQ8-0i-N1Y" firstAttribute="leading" secondItem="AYe-EA-7Da" secondAttribute="leading" id="zhK-9f-rQi"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="4Lh-UP-25y"/>
+                                <exclude reference="Vxv-4F-92i"/>
                             </mask>
                         </variation>
                     </view>

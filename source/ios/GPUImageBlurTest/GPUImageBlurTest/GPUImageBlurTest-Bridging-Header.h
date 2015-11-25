@@ -3,3 +3,4 @@
 //
 
 #import <GPUImage.h>
+#import <GPUImage/GPUImageFASTCornerDetectionFilter.h>

@@ -63,5 +63,95 @@ class ViewController: UIViewController {
         
         NSLog("Finish to blur");
     }
+    
+    @IBAction func clickOnGray(sender: AnyObject) {
+        NSLog("Click On Gray");
+        let inputImage = UIImage.init(named: "test.jpg")
+        
+        let blurFilter = GPUImageGrayscaleFilter()
+        let outputImage = blurFilter.imageByFilteringImage(inputImage)
+        imageView.image = outputImage
+    }
+    
+    @IBAction func clickOnHarrisCorner(sender: AnyObject){
+        NSLog("Click On Harris Corner");
+
+        let harrisCorner = GPUImageHarrisCornerDetectionFilter()
+        harrisCorner.threshold = 0.4
+        harrisCorner.sensitivity = 4.0
+        
+        let inputImage = UIImage.init(named: "test.jpg")
+        let gpuImageInput = GPUImagePicture.init(image: inputImage)
+        gpuImageInput.addTarget(harrisCorner)
+        
+        harrisCorner.cornersDetectedBlock = {
+            (cornerArray:UnsafeMutablePointer<GLfloat>, cornersDetected:UInt, frameTime:CMTime) in
+
+            let crosshairGenerator = GPUImageCrosshairGenerator.init()
+            crosshairGenerator.crosshairWidth = 20.0
+            crosshairGenerator.setCrosshairColorRed(1.0, green: 0.0, blue: 0.0)
+            crosshairGenerator.forceProcessingAtSize(gpuImageInput.outputImageSize())
+            
+            let blendFilter = GPUImageAlphaBlendFilter.init()
+            blendFilter.forceProcessingAtSize(gpuImageInput.outputImageSize())
+            gpuImageInput.addTarget(blendFilter)
+            crosshairGenerator.addTarget(blendFilter)
+            blendFilter.useNextFrameForImageCapture()
+            
+            NSLog("Number of corners: \(cornersDetected)");
+            
+            crosshairGenerator.renderCrosshairsFromArray(cornerArray, count: cornersDetected, frameTime: frameTime)
+            
+            dispatch_async(dispatch_get_main_queue(), {
+
+                let crosshairResult = blendFilter.imageFromCurrentFramebuffer()
+                if crosshairResult != nil{
+                    self.imageView.image = crosshairResult
+                }
+            });
+        }
+        
+        gpuImageInput.processImage()
+    }
+
+    @IBAction func clickOnFASTCorner(sender: AnyObject){
+        NSLog("Click On FAST Corner");
+        
+//        let FASTCorner = GPUImageFASTCornerDetectionFilter.init()
+//        
+//        let inputImage = UIImage.init(named: "test.jpg")
+//        let gpuImageInput = GPUImagePicture.init(image: inputImage)
+//        gpuImageInput.addTarget(FASTCorner)
+//        
+//        FASTCorner.cornersDetectedBlock = {
+//            (cornerArray:UnsafeMutablePointer<GLfloat>, cornersDetected:UInt, frameTime:CMTime) in
+//            
+//            let crosshairGenerator = GPUImageCrosshairGenerator.init()
+//            crosshairGenerator.crosshairWidth = 20.0
+//            crosshairGenerator.setCrosshairColorRed(1.0, green: 0.0, blue: 0.0)
+//            crosshairGenerator.forceProcessingAtSize(gpuImageInput.outputImageSize())
+//            
+//            let blendFilter = GPUImageAlphaBlendFilter.init()
+//            blendFilter.forceProcessingAtSize(gpuImageInput.outputImageSize())
+//            gpuImageInput.addTarget(blendFilter)
+//            crosshairGenerator.addTarget(blendFilter)
+//            blendFilter.useNextFrameForImageCapture()
+//            
+//            NSLog("Number of corners: \(cornersDetected)");
+//            
+//            crosshairGenerator.renderCrosshairsFromArray(cornerArray, count: cornersDetected, frameTime: frameTime)
+//            
+//            dispatch_async(dispatch_get_main_queue(), {
+//                
+//                let crosshairResult = blendFilter.imageFromCurrentFramebuffer()
+//                if crosshairResult != nil{
+//                    self.imageView.image = crosshairResult
+//                }
+//            });
+//        }
+//        
+//        gpuImageInput.processImage()
+    }
+
 }
 
