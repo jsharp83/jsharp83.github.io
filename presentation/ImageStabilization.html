@@ -148,8 +148,8 @@ void extractFeatureUsingBRISK(Mat& imageMat, vector<KeyPoint>& keyPoints, Mat& d
     int Octaves=3; //(pyramid layer) from which the keypoint has been extracted
     float PatternScales=1.0f;
     
-    cv::Ptr<cv::FeatureDetector> detactor = cv::BRISK::create(Threshl, Octaves, PatternScales);
-    detactor->detectAndCompute(imageMat, noArray(), keyPoints, descriptor);
+    cv::Ptr<cv::FeatureDetector> detector = cv::BRISK::create(Threshl, Octaves, PatternScales);
+    detector->detectAndCompute(imageMat, noArray(), keyPoints, descriptor);
 }
 
 ```
@@ -224,8 +224,20 @@ matcher.knnMatch(descriptorsA, descriptorsB, nn_matches, 2);
 Mat R = estimateRigidTransform(p2, p1, true);
 
 ```
-<p class="fragment"> 교훈 : 까불지말고 구현하기 전에 잘 찾아보자.</p>
+<p class="fragment"> 교훈 : 구현하기 전에 잘 찾아보자.</p>
 
+</script>
+</section>
+<section data-markdown>
+<script type="text/template">
+
+## Warp perspective
+
+
+```
+warpPerspective(targetImageMats[i], res, prevH, cv::Size(cols, rows));
+
+```
 </script>
 </section>
 
@@ -281,12 +293,20 @@ Mat R = estimateRigidTransform(p2, p1, true);
 <section>
 <h2> 속도 문제 </h2>
 <p class="fragment"> iPhone5..... 18secs </p>
-<p class="fragment"> <img src="./images/imageStabilization/7.png"> </p>
+<p class="fragment"> <img height=400 src="./images/imageStabilization/7.png"> </p>
 </section>
 
-<section>
-    <h2> 속도 문제 </h2>
-    <p> extract features : about 11 secs. </p>
+<section data-markdown>
+    <script type="text/template">
+        ## 속도 문제
+        extract features : about 11 secs.
+
+```cpp
+    cv::Ptr<cv::FeatureDetector> detector = cv::BRISK::create(Threshl, Octaves, PatternScales);
+    detector->detectAndCompute(imageMat, noArray(), keyPoints, descriptor);
+```
+
+</script>
 </section>
 <section>
     <h2> BRISK -> FAST+ORB </h2>
@@ -302,7 +322,7 @@ Mat R = estimateRigidTransform(p2, p1, true);
 <p>
 <img src="./images/imageStabilization/9.png">
 </p>
-<p>Copy vector.... 7 secs -> 0.5 secs</p>
+<p>Copy vector.... 5.5 secs -> 0.5 secs</p>
 
 </script>
 </section>
