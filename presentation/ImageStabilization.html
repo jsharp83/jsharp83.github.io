@@ -316,15 +316,13 @@ warpPerspective(targetImageMats[i], res, prevH, cv::Size(cols, rows));
     <p> 11 secs -> 0.5 secs </p>
     
 </section>
-<section data-markdown>
-<script type="text/template">
-## Find inliner
+<section>
+
+<h2> Find inliner</h2>
 <p>
-<img src="./images/imageStabilization/9.png">
+<img width="600" src="./images/imageStabilization/9.png">
 </p>
 <p>Copy vector.... 5.5 secs -> 0.5 secs</p>
-
-</script>
 </section>
 </section>
 
@@ -334,7 +332,7 @@ warpPerspective(targetImageMats[i], res, prevH, cv::Size(cols, rows));
 <p>안드로이드에서 OpenCV사용하기 -> JavaCV 말고 NDK사용.</p>
 <p><small> 그리고 </small></p>
 <h2> 남은 문제들</h2>
-<p> 속도개선(GPU 사용), 화면 울렁임(Kalman filter)</p>
+<p> 속도개선(GPU 사용), 화면 울렁임(특징점을 고르게 분포시킴), 흔들림 정확도 향상(Kalman filter)</p>
 </section>
 
 <section>
