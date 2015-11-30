@@ -534,9 +534,252 @@ glDrawBuffers(3, targets);
 </section>
 </section>
 
+<section>
+
+<section data-markdown>
+<script type="text/template">
+
+## Gray image using GPUImage
+
+```
+@IBAction func clickOnGray(sender: AnyObject) {
+    NSLog("Click On Gray");
+    let inputImage = UIImage.init(named: "test.jpg")
+    
+    let blurFilter = GPUImageGrayscaleFilter()
+    let outputImage = blurFilter.imageByFilteringImage(inputImage)
+    imageView.image = outputImage
+}
+```
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+        
+## Gray image using GPUImage
+
+GPUImageGrayscaleFilter.m, Fragment Shader
+        
+
+```
+NSString *const kGPUImageLuminanceFragmentShaderString = SHADER_STRING
+(
+ varying vec2 textureCoordinate;
+ 
+ uniform sampler2D inputImageTexture;
+ 
+ const vec3 W = vec3(0.2125, 0.7154, 0.0721);
+ 
+ void main()
+ {
+ vec4 textureColor = texture2D(inputImageTexture, textureCoordinate);
+ float luminance = dot(textureColor.rgb, W);
+ 
+ gl_FragColor = vec4(vec3(luminance), textureColor.a);
+ }
+ );
+
+```
+
+</script>
+</section>
+
+<section>
+    <h2>RGB to Luminance</h2>
+    <img width="600" src="./images/opengles/14.png">
+    <p>https://en.wikipedia.org/wiki/Relative_luminance</p>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+
+## Gray image using GPUImage
+
+GPUImageFilter.m, Vertex Shader
+
+```
+NSString *const kGPUImageVertexShaderString = SHADER_STRING
+(
+ attribute vec4 position;
+ attribute vec4 inputTextureCoordinate;
+ 
+ varying vec2 textureCoordinate;
+ 
+ void main()
+ {
+ gl_Position = position;
+ textureCoordinate = inputTextureCoordinate.xy;
+ }
+ );
+
+```
+</script>
+</section>
 
 
+<section data-markdown>
+<script type="text/template">
+    
+## Gray image using GPUImage
 
+GPUImageFilter.m
+
+1. Create or get prev context
+2. Compile or get prev Shader program.
+3. Initialize Attributes
+4. Link shader program
+5. Set Active Shader Program
+
+
+```
+[GPUImageContext useImageProcessingContext];    // Create or get prev context
+
+filterProgram = [[GPUImageContext sharedImageProcessingContext] programForVertexShaderString:vertexShaderString fragmentShaderString:fragmentShaderString];
+
+[self initializeAttributes];
+
+[filterProgram link]
+
+[GPUImageContext setActiveShaderProgram:filterProgram];
+
+```
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Gray image using GPUImage
+GPUImagePicture initWithCGImage
+
+FrameBuffer, Bind Texture
+
+</script>
+</section>
+
+</section>
+
+<section>
+    
+
+<section data-markdown>
+<script type="text/template">
+
+## Gaussian Blur using GPUImage
+            
+
+```
+@IBAction func clickOnBlurUsingGPUImage(sender: AnyObject) {
+    NSLog("Start to blur");
+    
+    let inputImage = UIImage.init(named: "test.jpg")
+    
+    let blurFilter = GPUImageGaussianBlurFilter()
+    blurFilter.blurRadiusInPixels = 10
+    
+    let outputImage = blurFilter.imageByFilteringImage(inputImage)
+    imageView.image = outputImage
+}
+
+```
+
+</script>
+</section>
+
+<section>
+    <h2>Spatial filter</h2>
+    <img width="600" src="./images/opengles/15.png">
+http://www.coe.utah.edu/~cs4640/slides/Lecture5.pdf
+</section>
+<section>
+    <h2>Spatial filter</h2>
+    <img width="600" src="./images/opengles/16.png">
+http://www.coe.utah.edu/~cs4640/slides/Lecture5.pdf
+</section>
+<section>
+    <h2>Mean filter</h2>
+    <img width="600" src="./images/opengles/17.png">
+http://www.coe.utah.edu/~cs4640/slides/Lecture5.pdf
+</section>
+<section>
+    <h2>Sharpen filter</h2>
+    <img width="600" src="./images/opengles/18.png">
+http://www.coe.utah.edu/~cs4640/slides/Lecture5.pdf
+</section>
+<section>
+    <h2>Mean filter</h2>
+    <img width="600" src="./images/opengles/19.png">
+http://www.coe.utah.edu/~cs4640/slides/Lecture5.pdf
+</section>
+<section>
+    <h2>Sharpen filter</h2>
+    <img width="600" src="./images/opengles/20.png">
+
+http://www.coe.utah.edu/~cs4640/slides/Lecture5.pdf
+</section>
+<section>
+    <h2>Blur filter</h2>
+    <img width="600" src="./images/opengles/21.png">
+
+http://www.coe.utah.edu/~cs4640/slides/Lecture5.pdf
+</section>
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Gaussian Blur Vertex Shader
+
+```
+attribute vec4 position;
+attribute vec4 inputTextureCoordinate;
+
+uniform float texelWidthOffset;
+uniform float texelHeightOffset;
+
+varying vec2 blurCoordinates[5];
+
+void main()
+{
+    gl_Position = position;
+    
+    vec2 singleStepOffset = vec2(texelWidthOffset, texelHeightOffset);
+    blurCoordinates[0] = inputTextureCoordinate.xy;
+    blurCoordinates[1] = inputTextureCoordinate.xy + singleStepOffset * 1.407333;
+    blurCoordinates[2] = inputTextureCoordinate.xy - singleStepOffset * 1.407333;
+    blurCoordinates[3] = inputTextureCoordinate.xy + singleStepOffset * 3.294215;
+    blurCoordinates[4] = inputTextureCoordinate.xy - singleStepOffset * 3.294215;
+}
+```
+</script>
+</section>
+
+<section data-markdown>
+<script type="text/template">
+## Gaussian Blur Fragment Shader
+
+```
+uniform sampler2D inputImageTexture;
+uniform highp float texelWidthOffset;
+uniform highp float texelHeightOffset;
+
+varying highp vec2 blurCoordinates[5];
+
+void main()
+{
+    lowp vec4 sum = vec4(0.0);
+    sum += texture2D(inputImageTexture, blurCoordinates[0]) * 0.204164;
+    sum += texture2D(inputImageTexture, blurCoordinates[1]) * 0.304005;
+    sum += texture2D(inputImageTexture, blurCoordinates[2]) * 0.304005;
+    sum += texture2D(inputImageTexture, blurCoordinates[3]) * 0.093913;
+    sum += texture2D(inputImageTexture, blurCoordinates[4]) * 0.093913;
+    gl_FragColor = sum;
+}
+```
+</script>
+</section>
+
+</section>
 
 </div>
 </div>

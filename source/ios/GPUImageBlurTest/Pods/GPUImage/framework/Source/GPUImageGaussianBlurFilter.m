@@ -237,6 +237,8 @@
     
     // Footer
     [shaderString appendString:@"}\n"];
+    
+    NSLog(@"ShaderStr : %@", shaderString);
 
     free(optimizedGaussianOffsets);
     free(standardGaussianWeights);
@@ -343,6 +345,8 @@
     [shaderString appendString:@"\
         gl_FragColor = sum;\n\
      }\n"];
+    
+    NSLog(@"FragShader : %@", shaderString);
 
     free(standardGaussianWeights);
     return shaderString;
