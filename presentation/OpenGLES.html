@@ -42,9 +42,10 @@
 	  <!-- Any section element inside of this container is displayed as a slide -->
 	  <div class="slides">
 		<section>
-		  <h2>About OpenGL ES</h2>
+		  <h2>About OpenGL ES and Shader</h2>
 		  <p>
-			OpenGL ES Programming Guide for iOS
+			OpenGL ES Programming Guide for iOS<br>
+            GPUImage
 		  </p>
 		</section>
 
@@ -369,7 +370,7 @@ Framebuffer objects are the destination for rendering commands.
         
         * To use the framebuffer for offscreen image processing, attach a renderbuffer
         * To use the framebuffer image as an input to a later rendering step, attach a texture
-        * To use the framebuffer in a Core Animation layer composition, use a special Core Animation–aware renderbuffer.
+        * To use the framebuffer in a Core Animation layer composition, use a special Core Animation–aware renderbuffer.(CAEAGLLayer)
 
     </script>
 </section>
@@ -468,13 +469,6 @@ glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER,
 ```
 </script>
 </section>
-</section>
-
-<section>
-<section>
-<h2>OpenGL ES as a Graphics Pipeline</h2>
-<img src="./images/opengles/7.png">
-</section>
 
 <section>
     <h2>Multiple render targets</h2>
@@ -482,10 +476,9 @@ glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER,
 </section>
 
 <section data-markdown>
-
 <script type="text/template">
-    
 ## Setting up multiple render targets
+        
         
 ```
 // Attach (previously created) textures to the framebuffer.
@@ -493,17 +486,52 @@ glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
 glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, _positionTexture, 0);
 glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, _normalTexture, 0);
 glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, _depthTexture, 0);
-
+        
 // Specify the framebuffer attachments for rendering.
 GLenum targets[] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2};
 glDrawBuffers(3, targets);
-
+        
 ```
 </script>
 </section>
 
+</section>
 
+<section>
+<section>
+<h2>OpenGL ES as a Graphics Pipeline</h2>
+<img height="500" src="./images/opengles/7.png">
+</section>
 
+<section>
+    <h2>OpenGL ES 2.0 Graphics Pipeline</h2>
+    <img width="600" src="./images/opengles/9.png">
+</section>
+
+<section>
+    <h2>Vertex shader example</h2>
+    <img width="600" src="./images/opengles/10.png">
+</section>
+
+<section>
+    <h2>Primitive Assembly</h2>
+    Triangle, line, point-sprite
+</section>
+
+<section>
+    <h2>Rasterization</h2>
+    <img width="600" src="./images/opengles/11.png">
+</section>
+
+<section>
+    <h2>Fragment shader example</h2>
+    <img width="600" src="./images/opengles/12.png">
+</section>
+
+<section>
+    <h2>Per-Fragment operation</h2>
+    <img width="600" src="./images/opengles/13.png">
+</section>
 </section>
 
 
