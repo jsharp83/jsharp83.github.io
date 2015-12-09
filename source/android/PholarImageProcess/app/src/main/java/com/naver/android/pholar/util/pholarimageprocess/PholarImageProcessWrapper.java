@@ -24,8 +24,6 @@ public class PholarImageProcessWrapper {
     public native double[] getAvgColor(long matAddr);
 
     public int getAvgColor(Bitmap bitmap){
-        Log.d("Test", "test");
-
         Mat mat = new Mat(bitmap.getHeight(), bitmap.getWidth(), CvType.CV_8UC4);
         Utils.bitmapToMat(bitmap, mat);
 
