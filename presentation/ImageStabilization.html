@@ -71,7 +71,7 @@
     <section>
         <h2> Image stabilization </h2>
         <p> Hardware, Software </p>
-        <img width="500" src="./images/imageStabilization/11.jpg">
+        <img width="800" src="./images/imageStabilization/11.jpg">
     </section>
     <section>
         <h2> 제약사항 파악 </h2>
@@ -84,8 +84,8 @@
         <h2> 제약사항 파악 </h2>
         <p> Real-time -> 필요 없음. </p>
         <p> Iterative -> 필요 없음. </p>
-        <p> 떨림 정도 -> 신경 안씀. </p>
-        <p> 개발 기간 -> 아무도 신경안씀. </p>
+        <p> 떨림 정도 -> 일정크기 이상은 제외 </p>
+        <p> 개발 기간 -> 제한 없음 </p>
     </section>
 <!--    <section>-->
 <!--        <h2> 제약사항 파악 </h2>-->
@@ -116,47 +116,40 @@
 <section>
     <section>
         <h2> 특징점 뽑기(Feature extraction) </h2>
-        <img src="./images/imageStabilization/3.png">
+        <img width="900" src="./images/imageStabilization/3.png">
     </section>
     <section>
         <h2> SSD(sum of squared difference), Moravec80 </h2>
-        <img src="./images/imageStabilization/4.png">
+        <img width="900" src="./images/imageStabilization/4.png">
     </section>
     <section>
         Moravec80 -> Harris Corner(Harris88) -> SIFT(Scale invariant feature Transform, Lowe2004)
     </section>
     <section>
     <h2> Descriptor 생성 </h2>
-    <p><img src="./images/imageStabilization/5.png"></p>
+    <p><img width="800" src="./images/imageStabilization/5.png"></p>
     <p>(SIFT Descriptor, Lowe 2004)</p>
     </section>
     <section>
         <p> SIFT라는걸 구해서 쓰자.....? </p>
         <p class="fragment"> 특허가 있음. 일단 더 발전된 BRISK 라는걸 써보자.</p>
     </section>
-    <section data-markdown>
-        <script type="text/template">
-            ## BRISK, OpenCV
-
-```cpp
-void extractFeatureUsingBRISK(Mat& imageMat, vector<KeyPoint>& keyPoints, Mat& descriptor){
-    // Set brisk parameters
-    int Threshl=20;
-    int Octaves=3; //(pyramid layer) from which the keypoint has been extracted
-    float PatternScales=1.0f;
+<section>
+<h2> BRISK </h2>
+<p><img width="500" src="./images/imageStabilization/13.png"></p>
+    BRSIK sampling pattern N = 60 points
+</section>
     
-    cv::Ptr<cv::FeatureDetector> detector = cv::BRISK::create(Threshl, Octaves, PatternScales);
-    detector->detectAndCompute(imageMat, noArray(), keyPoints, descriptor);
-}
+    <section>
 
-```
-            </script>
+<h2> BRISK, OpenCV</h2>
+<p><img width="900" src="./images/imageStabilization/12.png"></p>
     </section>
     <section>
         <h2> Feature Extraction 결과</h2>
         <p>
-            <img width=300 height=300 src="./images/imageStabilization/result/1.gif">
-            <img width=300 height=300 src="./images/imageStabilization/result/2.gif">
+            <img width=400 height=400 src="./images/imageStabilization/result/1.gif">
+            <img width=400 height=400 src="./images/imageStabilization/result/2.gif">
         </p>
     </section>
 </section>
@@ -165,7 +158,7 @@ void extractFeatureUsingBRISK(Mat& imageMat, vector<KeyPoint>& keyPoints, Mat& d
 <section>
     <h2> Feature Matching </h2>
     <p> 어떤 점이 다음 이미지 들에서 어디에 위치하는가. </p>
-    <p><img width=300 height=300 src="./images/imageStabilization/result/2.gif"></p>
+    <p><img width=400 height=400 src="./images/imageStabilization/result/2.gif"></p>
 </section>
 
 <section>
@@ -188,8 +181,8 @@ matcher.knnMatch(descriptorsA, descriptorsB, nn_matches, 2);
 <section>
     <h2> Feature Matching 결과 </h2>
     <p>
-        <img width=300 height=300 src="./images/imageStabilization/result/2.gif">
-        <img width=300 height=300 src="./images/imageStabilization/result/3.gif">
+        <img width=400 height=400 src="./images/imageStabilization/result/2.gif">
+        <img width=400 height=400 src="./images/imageStabilization/result/3.gif">
     </p>
 </section>
 </section>
@@ -232,8 +225,8 @@ warpPerspective(targetImageMats[i], res, prevH, cv::Size(cols, rows));
 <section>
     <h2> 여기까지의 결과 </h2>
     <p>
-        <img width=300 height=300 src="./images/imageStabilization/result/1.gif">
-        <img width=300 height=300 src="./images/imageStabilization/result/4.gif">
+        <img width=400 height=400 src="./images/imageStabilization/result/1.gif">
+        <img width=400 height=400 src="./images/imageStabilization/result/4.gif">
     </p>
 </section>
 
@@ -252,24 +245,24 @@ warpPerspective(targetImageMats[i], res, prevH, cv::Size(cols, rows));
 <section>
     <h2> 움직이는 물체에서 점 추출 </h2>
     <p>
-    <img width=300 height=300 src="./images/imageStabilization/result/5.gif">
-    <img width=300 height=300 src="./images/imageStabilization/result/6.gif">
+    <img width=400 height=400 src="./images/imageStabilization/result/5.gif">
+    <img width=400 height=400 src="./images/imageStabilization/result/6.gif">
     </p>
 </section>
 
 <section>
     <h2> 공통으로 나오는 애들만 매칭 </h2>
     <p>
-    <img width=300 height=300 src="./images/imageStabilization/result/6.gif">
-    <img width=300 height=300 src="./images/imageStabilization/result/7.gif">
+    <img width=400 height=400 src="./images/imageStabilization/result/6.gif">
+    <img width=400 height=400 src="./images/imageStabilization/result/7.gif">
     </p>
 </section>
 
 <section>
     <h2> 결과 </h2>
     <p>
-    <img width=300 height=300 src="./images/imageStabilization/result/5.gif">
-    <img width=300 height=300 src="./images/imageStabilization/result/8.gif">
+    <img width=400 height=400 src="./images/imageStabilization/result/5.gif">
+    <img width=400 height=400 src="./images/imageStabilization/result/8.gif">
     </p>
 </section>
 
@@ -282,22 +275,19 @@ warpPerspective(targetImageMats[i], res, prevH, cv::Size(cols, rows));
 <p class="fragment"> <img height=400 src="./images/imageStabilization/7.png"> </p>
 </section>
 
-<section data-markdown>
-    <script type="text/template">
-        ## 속도 문제
-        extract features : about 11 secs.
+<section>
 
-```cpp
-    cv::Ptr<cv::FeatureDetector> detector = cv::BRISK::create(Threshl, Octaves, PatternScales);
-    detector->detectAndCompute(imageMat, noArray(), keyPoints, descriptor);
-```
+<h2>속도 문제</h2>
 
-</script>
+<p>extract features : about 11 secs.</p>
+<p><img width="900" src="./images/imageStabilization/12.png"></p>
+
+
 </section>
 <section>
-    <h2> BRISK -> FAST+ORB </h2>
+    <h2> BRISK(AGAST+BRISK) -> FAST+ORB </h2>
     <p>
-    <img src="./images/imageStabilization/8.png">
+    <img width="800" src="./images/imageStabilization/8.png">
     </p>
     <p> 11 secs -> 0.5 secs </p>
     
@@ -306,9 +296,10 @@ warpPerspective(targetImageMats[i], res, prevH, cv::Size(cols, rows));
 
 <h2> Find inliner</h2>
 <p>
-<img width="600" src="./images/imageStabilization/9.png">
+Copy vector.... 5.5 secs -> 0.5 secs
+<img width="900" src="./images/imageStabilization/9.png">
 </p>
-<p>Copy vector.... 5.5 secs -> 0.5 secs</p>
+
 </section>
 </section>
 
