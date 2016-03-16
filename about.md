@@ -4,7 +4,6 @@ title: About
 permalink: /about/
 ---
 
-
 I'm a programmer and especially I'm making money by developing IOS software now.  
 I like English but it doesn't like me so I use stupid English sometimes.  
 I'm interested in mobile programming and robotics.
@@ -20,6 +19,7 @@ I'm interested in mobile programming and robotics.
 ### Pholar (2015.3 ~ Present)
 Pholar is a SNS based on HashTag.  
 
+* [Image Stabilization](http://d2.naver.com/helloworld/1994807)
 * Demo Video  
 [![Pholar Demo video](http://img.youtube.com/vi/tTQuwfzINkc/0.jpg)](http://www.youtube.com/watch?v=tTQuwfzINkc)
 
