@@ -3,6 +3,8 @@ layout: page
 title: Presentation
 permalink: /presentationList/
 ---
+* 2016
+    * [Image stabilization, Korean](http://d2.naver.com/helloworld/1994807)
 
 * 2015
     * [A Swift Tour, Korean](http://jsharp83.github.io/presentation/SwiftTour.html)
