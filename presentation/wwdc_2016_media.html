@@ -154,280 +154,125 @@
 </section>
 
 </section>
-
-        <section>
-		<section>
-		  <h2> Loopic </h2>
-          <p>
-          0.25 sec, 6장의 연속사진
-          </p>
-          <p>
-          <img width="500" height="500" src="./images/imageStabilization/1.gif">
-</p>
-		</section>
-        <section>
-            <h2> Loopic </h2>
-                <p class="fragment"> ... 근데 떨림이 심하다. </p>
-            <p>
-            <img width="500" height="500" src="./images/imageStabilization/2.gif">
-                </p>
-        </section>
-</section>
-
-<section>
-    <section>
-        <h2> Image stabilization </h2>
-        <p> Hardware, Software </p>
-        <img width="400" src="./images/imageStabilization/ImageStabilization1.gif">
-<img width="400" src="./images/imageStabilization/ImageStabilization2.gif">
-    </section>
-    <section>
-        <h2> 제약사항 파악 </h2>
-        <p class="fragment"> Real-time ? </p>
-        <p class="fragment"> Iterative ? </p>
-        <p class="fragment"> 떨림 정도 ?</p>
-        <p class="fragment"> 개발 기간 ? </p>
-    </section>
-    <section>
-        <h2> 제약사항 파악 </h2>
-        <p> Real-time -> 필요 없음. </p>
-        <p> Iterative -> 필요 없음. </p>
-        <p> 떨림 정도 -> 일정크기 이상은 제외 </p>
-        <p> 개발 기간 -> 제한 없음 </p>
-    </section>
-<!--    <section>-->
-<!--        <h2> 제약사항 파악 </h2>-->
-<!--        <p> <small>최대한 간단하게 구현해보자! </small> </p>-->
-<!--        <p class="fragment">간단한건 아는게 많을 때 가능하다.</p>-->
-<!--    </section>-->
-</section>
-
-<section>
-    <section>
-        <h2> Process </h2>
-        <p> 이미지가 떨린다?? </p>
-        <p class="fragment"> 각 이미지가 이동한 만큼 되돌려주면 되지 않는가?</p>
-        <p class="fragment"> 얼마나 이동했는지 어떻게 아는가?</p>
-        <p class="fragment"> 전에 나왔던 것이 다음장에 어디에 나오는지 보면 되지않나?</p>
-    </section>
-    
-    <section data-markdown>
-        <script type="text/template">
-            ## Process
-* 각 이미지에서 특징점을 뽑는다.
-* 특징점들 중 같은 특징점을 찾는다.
-* 같은 특징점들이 얼마나 이동했나를 가지고 이동을 추정(estimate) 한다
-        </script>
-    </section>
-</section>
-
-<section>
-    <section>
-        <h2> 특징점 뽑기(Feature extraction) </h2>
-        <img width="900" src="./images/imageStabilization/3.png">
-    </section>
-    <section>
-        <h2> SSD(sum of squared difference), Moravec80 </h2>
-        <img width="900" src="./images/imageStabilization/4.png">
-    </section>
-    <section>
-        Moravec80 -> Harris Corner(Harris88) -> SIFT(Scale invariant feature Transform, Lowe2004)
-    </section>
-    <section>
-    <h2> Descriptor 생성 </h2>
-    <p><img width="800" src="./images/imageStabilization/5.png"></p>
-    <p>(SIFT Descriptor, Lowe 2004)</p>
-    </section>
-    <section>
-        <p> SIFT라는걸 구해서 쓰자.....? </p>
-        <p class="fragment"> 특허가 있음. 일단 더 가벼운 BRISK 라는걸 써보자.</p>
-    </section>
-<section>
-<h2> BRISK </h2>
-<p><img width="500" src="./images/imageStabilization/13.png"></p>
-    BRISK sampling pattern N = 60 points
-</section>
-    
-    <section>
-
-<h2> BRISK, OpenCV</h2>
-<p><img width="900" src="./images/imageStabilization/12.png"></p>
-    </section>
-    <section>
-        <h2> Feature Extraction 결과</h2>
-        <p>
-            <img width=400 height=400 src="./images/imageStabilization/result/1.gif">
-            <img width=400 height=400 src="./images/imageStabilization/result/2.gif">
-        </p>
-    </section>
-</section>
-
 <section>
 <section>
-    <h2> Feature Matching </h2>
-    <p> 어떤 점이 다음 이미지 들에서 어디에 위치하는가. </p>
-    <p><img width=400 height=400 src="./images/imageStabilization/result/2.gif"></p>
-</section>
-
-<section>
-    <h2> Feature Matching </h2>
-    <p> Descriptor, Euclidean Distance, Mahalanobis Distance, Kd-Tree, Hashing, etc....</p>
+    <h3> Live Photo</h3>
+    <img width="500"  src="./images/wwdc2016/live_photo.0.gif">
 </section>
 
 <section data-markdown>
     <script type="text/template">
-## OpenCV를 이용한 Feature Matching
 
-```cpp
-cv::BFMatcher matcher(cv::NORM_HAMMING);
-std::vector< std::vector<DMatch> > nn_matches;
-matcher.knnMatch(descriptorsA, descriptorsB, nn_matches, 2);
-```
-</script>
-</section>
+## Moment or Memory
 
-<section>
-    <h2> Feature Matching 결과 </h2>
-    <p>
-        <img width=400 height=400 src="./images/imageStabilization/result/2.gif">
-        <img width=400 height=400 src="./images/imageStabilization/result/3.gif">
-    </p>
-</section>
-</section>
+* Moment
+    * Full resolution still image(12MP JPEG)
+    * Same quality as non-Live Photo(SIS / OIS)
+* Memory
+    * A short movie encompassing the still time
+    * Screen resolution(1440×1080 or 1290×960)
+    * includes audio
 
-<section>
+    </script>
+</section>
 
 <section data-markdown>
-<script type="text/template">
-    ## 이제 이미지가 얼마나 이동했는지 찾자.
-    
-* 에러 값을 최소로 하는 Geometric transformation matrix.
-* Ransac
-
-    
-</script>
-</section>
-<section data-markdown>
-<script type="text/template">
-## estimateRigidTransform
+    <script type="text/template">
         
-```
-Mat R = estimateRigidTransform(p2, p1, true);
+## Moment or Memory
 
-```
-</script>
+* iOS10
+    * Video stabilization
+    * Interruption-free music during capture
+        </script>
 </section>
-<section data-markdown>
-<script type="text/template">
-
-## Warp perspective
 
 
-```
-warpPerspective(targetImageMats[i], res, prevH, cv::Size(cols, rows));
-
-```
-</script>
+<section>
+    <h3> Live Photo .MOV Asset</h3>
+    <img width="500"  src="./images/wwdc2016/12.png">
 </section>
 
 <section>
-    <h2> 여기까지의 결과 </h2>
-    <p>
-        <img width=400 height=400 src="./images/imageStabilization/result/1.gif">
-        <img width=400 height=400 src="./images/imageStabilization/result/4.gif">
-    </p>
+    <h3> Capturing Live Photos </h3>
+    <img width="800"  src="./images/wwdc2016/13.png">
 </section>
-
-</section>
-
 <section>
-    
-<section>
-    <h2> 화면에 움직이는 물체가 있으면 어떨까? </h2>
+    <h3> Capturing Live Photos </h3>
+    <img width="800"  src="./images/wwdc2016/14.png">
 </section>
 
 <section>
-    <h2> 전체 프레임에서 공통적으로 잡히는 점들만 남겨보면 어떨까? </h2>
+    <h3> Live Photos Viewer </h3>
+    <p><img width="700"  src="./images/wwdc2016/15.png"></p>
 </section>
 
 <section>
-    <h2> 움직이는 물체에서 점 추출 </h2>
-    <p>
-    <img width=400 height=400 src="./images/imageStabilization/result/5.gif">
-    <img width=400 height=400 src="./images/imageStabilization/result/6.gif">
-    </p>
-</section>
-
-<section>
-    <h2> 공통으로 나오는 애들만 매칭 </h2>
-    <p>
-    <img width=400 height=400 src="./images/imageStabilization/result/6.gif">
-    <img width=400 height=400 src="./images/imageStabilization/result/7.gif">
-    </p>
-</section>
-
-<section>
-    <h2> 결과 </h2>
-    <p>
-    <img width=400 height=400 src="./images/imageStabilization/result/5.gif">
-    <img width=400 height=400 src="./images/imageStabilization/result/8.gif">
-    </p>
+    <h3> Edit Live Photos  </h3>
+<p> PHLivePhotoEditingContext - iOS10</p>
+<p> Live Photo Editing and RAW Processing with Core Image - Session 505</p>
 </section>
 
 </section>
 
 <section>
 <section>
-<h2> 속도 문제 </h2>
-<p class="fragment"> iPhone5..... 18secs </p>
-<p class="fragment"> <img height=400 src="./images/imageStabilization/7.png"> </p>
+    <h3> RAW Photo Capture </h3>
+    CMOS Sensor
+    <p><img width="500"  src="./images/wwdc2016/16.png"></p>
+CMOS Sensor는 Color Filter Array, Sensor Array 두개의 레이어로 구성.
+Color Filter Array는 빛으로 부터 한 색상만 통과하게 하고, 그 값을 Sensor Array에서 Sensing 함. 사람의 눈은Green 값에 더 민감해서 R, B 값보다 두배로 센싱함.
+
+</section>
+
+<section>
+    <h3>Capturing RAW Photos</h3>
+    <p><img width="800"  src="./images/wwdc2016/17.png"></p>
+    <p>Rear Camera Only.</p>
+</section>
+<section>
+    <h3>Capturing RAW Photos</h3>
+    <img width="800"  src="./images/wwdc2016/18.png">
+</section>
+
+
+</section>
+
+<section>
+    <section>
+        <h3>Capturing Preview Images</h3>
+        <img width="800"  src="./images/wwdc2016/19.png">
+    </section>
+    <section>
+        <h3>Capturing Preview Images</h3>
+        <img width="800"  src="./images/wwdc2016/20.png">
+            </section>
+    <section>
+        <h3>Capturing Preview Images</h3>
+        <img width="800"  src="./images/wwdc2016/21.png">
+            </section>
+
 </section>
 
 <section>
 
-<h2>속도 문제</h2>
-
-<p>extract features : about 11 secs.</p>
-<p><img width="900" src="./images/imageStabilization/12.png"></p>
-
-
-</section>
 <section>
-    <h2> BRISK(AGAST+BRISK) -> FAST+ORB </h2>
-    <p>
-    <img width="800" src="./images/imageStabilization/8.png">
-    </p>
-    <p> 11 secs -> 0.5 secs </p>
-    
-</section>
-<section>
-
-<h2> Find inliner</h2>
-<p>
-Copy vector.... 5.5 secs -> 0.5 secs
-<img width="900" src="./images/imageStabilization/9.png">
-</p>
-
-</section>
+    <h3> Wide Color Capture </h3>
+    <p>iPad Pro 9.7 True Tone Display</p>
+    <p>Color management in iOS 9.3</p>
 </section>
 
 <section>
-<section>
-<h2> 남은 이야기</h2>
-<p>안드로이드에서 OpenCV사용하기 -> JavaCV 말고 NDK사용.</p>
-<p><small> 그리고 </small></p>
-<h2> 남은 문제들</h2>
-<p> 속도개선(GPU 사용), 화면 울렁임(특징점을 고르게 분포시킴), 흔들림 정확도 향상(Kalman filter)</p>
+    <h3>sRGB color space</h3>
+    <img width="800"  src="./images/wwdc2016/22.png">
 </section>
 
 <section>
-    <h2> Open Source </h2>
-    <p><image width="600" src="./images/imageStabilization/10.png"></p>
-    <p><small>https://github.com/naver/imagestabilizer</small></p>
-</section>
+    <h3>Display p3 color space</h3>
+    <img width="800"  src="./images/wwdc2016/23.png">
 </section>
 
-
+</section>
 
 </div>
 </div>
