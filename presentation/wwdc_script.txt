@@ -1,0 +1,82 @@
+안녕하세요. 네이버에 전은철입니다.
+저는 WWDC 2016에서 발표되어서 ios10부터 적용되는 기술중에, Media와 관련된 내용에 대해서 설명드리겠습니다.
+
+WWDC는 저번주에 끝났지만, 관련 동영상들은 지금도 웹페이지 들어가면 볼 수 있는데요, 잠깐 이 동영상들에 대해 설명드려보면, 일부는 실제 세션장에서 공개된것들이고, 일부는 Chalk talk 이라고 해서 추가로 설명을 더 하고 싶었던 부분을 녹화해둔 영상들이 있는데요, 전체 동영상들은 앱프레임워크 디자인 디벨롭퍼툴 디스트리뷰션 등으로 나눠져 있는데요, 우선 가장 중요한 동영상은 키노트랑 플랫폼스테이트 오브더 유니온인데요, 키노트가 약간은 일반인을 대상으로 앞으로의 변화에 대해서 설명해주는 것이라하면 Platforms state of the union은 개발자 입장에서 어떻게 바뀌고 앞으로 어떤 세션들이 있을거다를 설명해주는 세션입니다.
+
+App frameworks 카테고리는 200번대 세션인데, iMessage, Sirikit 등에 대한 내용이 있었고,
+Design 쪽은 이렇게 5개정도의 세션이 있었습니다.
+Developer tools 세션은 400번대 세션인데 스위프트 API Guide 같은 세션도 인상깊었고, Debugging 관련된 세션도 좀 있었던거 같습니다.
+Distribution쪽에는 5개 정도가 있었는데 Subscription 관련해서 기능들이 좀 늘어서 그런 설명들이 있었고, App store에 검색광고 붙는거 관련해서 세션이 있었습니다.
+Feature에는 keynote랑 platforms state of the union 등이 있었고,
+System framework쪽에는 Notification관련해서 바뀌는 점, Apple pay 등의 내용이 있습니다.
+
+미디어 관련해서는 11개의 동영상이 있는데 우선 Advances in iOS Photography 같은 경우에는 기존에 쓰던 AVCaptureStillImageOutput이라고해서 이미지를 캡쳐할때 쓰던 클래스가 Deprecated 되면서 AVCapturePhotoOutput이라는 애가 생겼습니다. 그래서 그 부분관련해서 걔가 왜 생겼고, 어떻게 쓰면 된다에 관한 내용이고, Live Photo Editing and Raw Processing with core image 는 iphone 6s 부터 지원되는 live photo 기능이 그간에는 필터를 입히면 그냥 일반 이미지로 변경이 되었었는데, 이 부분을 필터를 입힐수 있고, 이번에 추가된 RAW 이미지등에도 CIFilter를 이용해서 필터를 입히는 부분에 대한 영상입니다.
+
+AVcapturePhotoOutput 세션은 Session 501에서 못다한 예기를 추가적으로 더 하는 Chalk talk 세션입니다.
+
+Graphics and Games쪽은 600번대 세션인데,
+Go Live with ReplayKit 의 경우는 작년에 공개된 화면 녹화하는 ReplayKit이 이제 Streaming 기능까지 제공을 해서 그것에 관한 내용이고, What's New in Metal Part2의 경우는 재밌었던게 뉴럴넷 관련된 알고리즘들을 Metal을 이용해서 사용할 수 있게 해놓고 데모도 보여주고 있어서 재밌었던것 같습니다.
+
+Advances in IOS Photography 세션은 새로 만들어진 AVCaptureOutput 인 AVCapturePhotoOutput에 대한 내용인데, 기존에 이미지를 캡쳐할때 사용을하던 AVCaptureStillImageOutput이 라이브포토 기능이라던지, ios10부터 지원되는 RAW 이미지파일, 그리고 캡쳐시에 Preview 사이즈로 가져온다던지 Wide Color 지원등이 안되기 때문에 만들어진 클래스인데요,
+
+조금더 자세히 살펴보면, 이전에는 오른쪽과 같이 AVCaptureStillImageOutput을 이용해서 캡쳐를 했었어요. AVCaptureSession이라는거에 CaptureDevice를 DeviceInput으로 addInput으로 껴주고, AVCaptureStillImageOutput을 addOuput 함수를 통해서 session에 껴주고나면 블록으로 캡쳐된 이미지를 받아왔었습니다. 이 AVCaptureStillImageOutput이 AVCapturePhotoOutput으로 바뀐거구요.
+
+AVCapturePhotoOutput을 쓰는것이 조금 바뀌긴 했는데, 그렇게 어렵진 않습니다.
+우선 AVCapturePhotoOutput객체를 만들고, AVCapturePhotoSettings이라고 해서 예전에는 그냥 dictionary로 하던 세팅부분이 클래스로 바뀌었구요. 그래서 저 클래스를 세팅해주고 capturePhoto라는 함수에 세팅과 딜리게이트받을 객체를 넘겨주고 나면 이제 캡쳐와 관련된 이벤트가 발생할때마다 delegate의 함수가 호출되게 되는건거죠.
+
+코드로 봐보면 하이레죨루션포토를 찍고싶다.하면 AVCapturePhotoSettings 객체를 만들고, isHighResolutionPhotoEnabled를 true 로 바꿔주고 capturePhoto에 setting파일과 delegate를 넘겨주면 됩니다.
+플래쉬를 동작하고 싶으면 setting에 플레쉬모드를 바꿔서 capturePhoto에 넣어주면 되고, BGRA포멧으로 이미지를 받고싶다 하면 해당 세팅을 해서 capturePhoto에 물려주면 됩니다.
+
+그래서 ios10에서는 기존에 쓰던 AVCaptureStillImageOutput이 deprecated 되었고, AVCaptureDevice쪽에 있던 flash관련된 변수들이 AVCapturePhotoOutput쪽으로 옮겨지고 deprecated 되었습니다.
+
+더 자세한 내용은 SourceCode가 공개되어있으니 참고하시면 될것같습니다.
+
+그럼 잘 쓰고있던 CaptureStillImageOutput을 왜 depreceted 되었냐 우선은 LIVE Photo를 캡쳐하는 기능을 지원하기 위해서인데요, Live Photo는 iphone6s 부터 제공되는 기능으로 촬영을 했을때 앞에 1.5초 촬영 후 1.5초 해서 3초간을 동영상으로 저장하는 기능입니다.
+
+Live Photo는 순간이라는 사진적인 특성과, memory라는 영상적인 특성을 동시에 가지는데요, 우선 사진적인 특성은 기존에 non-live Photo와 동일한 퀄리티로 Still Image stabilization, Optical Image Stabilization 기능 모두 사용가능하고요. 영상적인 특성은 audio를 포함해서 1440*1080 또는 1290*960의 resolution으로 촬영이 되게 됩니다.
+
+iOS10에는 추가적으로 live photo찍을때 video stabilization 기능이 추가되었고, 촬영할때 음악이 끊기던 부분을 수정했다고합니다. 얼마전에 구글에서 Motion stills 라고 Live Photo 영상을 stabilize 하고 플레이 해주는 앱을 냈던데, 며칠 안지나서 ios10에 stabilization기능이 추가되었다고 공개하는거 보니까 재밌다는 생각이 들더라구요.
+
+아무튼 LivePhoto는 3초짜리 영상과 1.5초때의 이미지 한장으로 구성이 되는데요, 이걸 캡쳐하는 걸 조금더 살펴보면
+
+AVCapturePhotoSetting 변수를 우선 만들어주고,
+livePhotoMovieFileURL이라고 해서 동영상을 저장할 패스를 지정해주고요.
+동영상에 meta정보를 저장하기 위해 AVMetadataItem이란걸 세팅해주고나서
+capturePhoto함수에 setting 값을 넘기면 이제 Live Photo를 캡쳐할 수 있게됩니다.
+
+이부분은 이제 1.5초대의 이미지를 저장하는 코드인거 같아요.
+
+라이브포토를 보여주기위해선 PHLivePhotoView라는 애를 써서 보여주면 되는데요, PHImageManager라는 애가 이미지와 동영상을 가져와서 PHLivePhoto 객체로 만들어주고, 이 객체를 PHLivePhotoView가 보여주는 형태입니다.
+
+live photo는 이번에 추가된 PHLivePhotoEditingContext라는 것을 이용해서 필터를 적용 할 수 있고, 조금 더 자세한 내용은 505세션 동영상을 참고하시면 됩니다.
+
+
+다음으로는 RAW Format 이미지에 대한 내용입니다. CMOS Sensor는 Color Filter Array Sensor Array 두개의 레이어로 구성이 되어있는데, Color Filter Array라는건 빛을 통과시킬때 한 색상만 통과하게 해주는 필터입니다. Sensor Array에서는 필터를 통과한 빛을 센싱해서 값으로 바꿔주는 역할을 하고, 지금 보시면 R,B에 비해 G 가 두배로 많은걸 볼수있는데, 사람의 눈이 G값에 더 민감해서 두배로 센싱한다고 합니다. 아무튼 이렇게 센싱된 데이터자체는 RAW Format이라고 하고 ios10부터는 DNG란 포멧으로 이 값을 그대로 쓸수 있게 되었고, 이전에는 이 값을 가공한 상태인 JPEG상태의 데이터를 가져와서 쓰고있었습니다.
+
+RAW 포멧을 캡쳐하는 방법은 앞에서 설명한 AVCapturePhotoSetting에서 세팅해주면 됩니다. 다만 다른점이 RAW 포멧은 후면카메라로 찍어야하고, SIS기능, highResolution기능은 꺼야합니다.
+
+이부분은 딜리게이트 되는 부분 코드인데 AVCapturePhotoOutput의 dngPhotoDataRepresentation으로 data를 만들고 dng 파일로 만들어주는 코드입니다.
+
+
+다음으로 설명드리는 부분은 preview image를 capture 하는 부분인데 기존에는 JPEG형태로 받아서 크기를 줄이는 과정을 거쳤는데, 이제는 capture시에 previewFormat에서 세팅을하면 previewImage를 capture할 수 있습니다.
+
+
+다음으로는 Wide Color지원인데요, iPad Pro 9.7부터 Wide Color를 지원되고 ios9.3부터 Color management가 가능합니다.  이 그림은 기존의 sRGB Color space를 나타내고 있고, 여기서 조금 더 확장된것이 p3 Color space 인데 속색부분이 많이 늘어났죠. DCI-p3 Standard를 따르면서 기존과 같은 Gamma 값을 유지했다는데, 저는 아무튼 색 표현하는게 늘었구나 정도로 이해했습니다.
+
+아무튼 그럼 우리는 capture를 할때 뭐를 해야하냐. 이부분은 AVCaptureSession이 거의 알아서 한다고 합니다. AVCaptureSession의 아래보이는 변수가 true로 세팅이 되어있으면, 오른쪽 위에 보이시는 것처럼 다양한 포멧의 데이터가 들어왔을때 실제 사용해야하는 포멧을 AVCaptureSession이 알아서 선택해준다고합니다.
+
+다음으로 얘기드릴거는 Scene monitoring 에 대한 내용입니다.
+
+아이폰에는 후면카메라에는 True Tone flash가 전면부에는 Retina flash가 제공되고, Still Image Stabilization이라고 해서 빛이 충분하지 않을때 Multiple image fusion capture라는 방식으로 이미지를 선명하게 하는 기능이 있습니다.
+
+문제는 이 기능을 언제 사용하고 사용하지 않을지, 그리고 사용하고 있으면 사용하고 있다는것을 유저한테 알려줄수 있어야하는데요, 그 부분이 이번 AVCapturePhotoOutput에 추가되었습니다. 지금 보시는 API가 관련된 API이고요,
+
+소스코드상에서 보면 AVCapturePhotoSetting을 만들어주고 플래쉬모드, SIS세팅을 해주고나서, photoOutput에 key value observing으로 해당 상태의 변화를 확인 할 수 있습니다.
+
+마지막으로 Privacy Change에 관한 내용인데요,
+ios7 부터 카메라나 엘범에 접근하려면 왼쪽과 같이 팝업으로 권한을 요청을하고 허락을해야 접근 할 수 있었는데요, ios10부터는 여기에 추가적으로 왜 그 권한을 요청하는지를 명시해야합니다. 명시하는 방법은 info.plist에 다음과 같은 값으로 세팅을 해주면 됩니다.
+
+정리를 해보면 ios10에서는 wide Color라고해서 Display p3 Color space를 지원하고, 원본이미지 데이터인 RAW Format을 제공하며, Live Photo를 Editing하는 기능되었습니다.
+그리고 오늘 설명드리지는 않았지만 화면을 녹화해주는 기능인 ReplayKit이 broadcasting을 지원하며, HLS도 Mpeg4를 지원하는등의 향상이 있습니다.
+
+이상 발표를 마치겠습니다. 감사합니다.
