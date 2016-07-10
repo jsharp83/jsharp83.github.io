@@ -4,6 +4,8 @@ title: Presentation
 permalink: /presentationList/
 ---
 * 2016
+
+    * [WWDC 2016, NAVER, Korean](http://jsharp83.github.io/presentation/wwdc_2016_media_naver.html)
     * [WWDC 2016, Korean](http://jsharp83.github.io/presentation/wwdc_2016_media.html)
     * [Image stabilization, Korean](http://d2.naver.com/helloworld/1994807)
 
