@@ -4,7 +4,77 @@ WWDC는 샌프란시스코 시내 안에 두군데 장소에서 진행이되는�
 
 우선은 일요일날 도착해서 Civic 센터에서 본인이름으로 된 출입증과 기념점퍼를 받았습니다.
 월요일에는 Civic센터에서 키노트와 플랫폼 스테이트 오브더 유니온 세션이 있는데 키노트가 약간 일반인 대상으로 기술의 변화를 설명하는 세션이라고 하면 플랫폼 스테이트 오브더 유니온은 그런 기술변화들이 개발자 입장에서 어떤 SDK가 어떻게 변했다를 설명해주는 세션입니다. 오른쪽 이미지는 세션후에 풀밭에 앉아서 점심용 센드위치 먹고있는 장면입니다.
-화요일부터 금요일까지는 모스콘 웨스트라는 곳에서 
+화요일부터 금요일까지는 모스콘 웨스트라는 곳에서 세션과 랩을 진행을 합니다. 건물 1층에서 오른쪽과 같이 Lab이 있어서 질문이 있는 사람들은 줄서서 애플 개발자들에게 질문을 할 수 있게 준비되어있구요, 2층,3층에서는 세션이 동시에 4개정도 열렸습니다. 오른쪽 사진은 페더리기라고 개발총괄하시는 분인데, 건물을 돌아다니다가 보면 사진도 찍을수 있었습니다.
+세션들이 다 끝나고난 금요일 오후에는 Bash라고 해서 행사를 마무리하는 파티까지하고 나면, WWDC행사가 끝이나게 됩니다.
+
+아시겠지만 WWDC영상들은 디벨로퍼사이트를 통해 공개되어있고, 위와같은 카테고리로 정리되어있는데요,
+200번대 세션인 App framework세션에서는 iMessage라던가 sirikit 과 관련된 내용이있었고
+디자인 세션에는 지금 이 다섯개 정도의 세션이 있구요.
+Developer Tool 세션에는 Swift API Design GuideLine같은 세션이 있었습니다.
+Distribution Session에는 Subscription관련해서 기능이 추가된 내용이라던지 앱스토어 검색부분에 광고가 붙게되는데 그것과 관련된 내용이 있었습니다.
+피쳐드에는 키노트랑 플랫폼 스테이트오브더 유니온 세션이 있었고
+시스템 프레임웤 세션에는 노티피케이션관련해서 이번에 추가된 내용들이 있는데 그 부분과 관련된 부분, 홈킷이라던지 뉴럴넷 관련된 설명이 있는 세션이 있었습니다.
+
+미디어와 관련된 세션은 500번대 세션으로 총 11개의 세션이 있었는데요, 우선 Advances in iOS PhotoGraphy라는 애가 501 번 세션인데 이미지캡쳐관련해서 AVCapturePhotoOutput이란 API를 설명하는 세션이었고, Live Photo Editing은 CIImage를 이용해서 Live Photo와, Raw format 이미지를 filtering 하는 내용입니다. What’s new in HTTP Live Streaming은 HLS관련해서 추가된 내용들을 설명하는 세션이었고 Advances in AVFoundation Playback은 AVPlayer의 재생상태관련해서 추가된 내용을 설명하는 세션이었습니다. Graphics and Game세션은 총 12개 였는데요, 그중 Go live with replayKit은 작년 ios9에 추가된 기능인 화면녹화기능이 이제 Live Stream 기능까지된다는 내용의 세션이었고, Metal part2는 Metal Performance shader를 딥러닝에 활용하는 내용등이 있었습니다.
+
+세부내용을 좀 더 살펴보면, 우선 새로운 AVCaptureOutput인 AVCapturePhotoOutput이라는 애가 소개 되었는데, 얘가하는 역할은 ios10부터 Live Photo를 캡쳐하고 편집할수 있게되었고, RAW포멧 이미지를 가져오고 처리할수 있게 되었으며, 캡쳐단에서 Preview Image를 가져올수있고 wide color포멧을 지원해주게 되었습니다.
+
+기존에 이미지캡쳐는 왼쪽과 같은 프로세스였는데요, AVCaptureSession이 있고, AVCaptureDevice로 부터 데이터를 받아서 AVCaptureStillImageOutput이라는 애를 써서 캡쳐를 했었는데요, 얘가 deprecated되고 오른쪽과 같은 AVCapturePhotoOutput을 사용하게 되었습니다. 사용방법은 우선 AVCapturePhotoOutput이라는 애를 만들고, 기존에는 설정부분을 Dictionary형태로 넘겼었는데, 내용이 많아져서 AVCapturePhotoSetting이라는 객체를 만들었습니다. 이 객체에 설정내용을 담아서 capturePhoto부분에 넘기면 이제 이벤트가 발생할때마다 delegate를 받게 됩니다.
+
+소스코드를 봐보면 우선 하이레죨루션이미지를 캡쳐하고 싶다 하면, AVCapturePhotoSettings를 만들어주고, 세팅의 isHighResolutionPhotoEnabled를 true로 하고 AVCapturePhotoOutput의 capturePhoto부분으로 세팅과 delegate를 넘겨주면 됩니다.
+
+기존에 사용하던 AVCaptureStillImageOutput과 AVCaptureDevice밑에 있던 플래시관련된 변수들이 deprecated되고 AVCapturePhotoOutput쪽으로 옮겨졌습니다.
+
+다음으로는 Live Photo관련 기능인데요, 기존에는 카메라에서 촬영만되고, Viewer형태로 보는 부분만 있었는데, 이부분을 촬영하고 편집하는 기능이 추가되었습니다.
+
+라이브포토 데이터는 이미지랑 촬영버튼을 누르기전 1.5초, 누른후의 1.5초 해서 총 3초정도의 동영상으로 구성이 되는데요, ios10부터는 video stabilization기능과 캡쳐시에 음악이 끊기던 부분이 수정되었다고합니다.
+
+라이브포토를 저장할땐 지금보시는것과같이 우선 AVCapturePhotoSetting을 만들어주고요, setting의 livePhotoMovieFileURL 저장할 파일URL을 지정해주고, 동영상 메타데이터 설정하는 부분이고 capturePhoto부분으로 넘겨주면 됩니다. 동영상은 앞에서 세팅한 URL에 저장되고, 이제 이미지를 저장해야하는데 delegate로 지금보시는것과같이 PhotoSampleBuffer가 넘어오면 이미지를 저장하면 됩니다.
+
+다음으로는 LivePhoto를 보여주는 부분인데요, 이미지와 동영상을 PHImageManager가 PHLivePhoto라는 객체로 만들어주고 PHLivePhotoView가 보여주는 형태입니다.
+
+라이브포토를 편집하는 내용도 있는데 이 부분은 505세션을 확인하시면 됩니다.
+
+다음으로 RAW이미지포멧을 캡쳐하는 부분인데요, 우선 CMOS Sensor는 두개의 Layer로 이루어지는데 Color Filter Array와 Sensor Array입니다. 빛이 Color Filter Array를 통과하면 해당색 한가지만 남게되고, Sensor Array는 그 한가지 색상을 센싱하는 구조인데요, 지금 보시면 초록색이 빩간색이랑 파란색에 비해 두배로 많은데, 그 이유는 사람눈이 녹색에 더 민감하기 때문이라고 합니다. 아무튼 이렇게 Sensing된 데이터 자체가 raw format형태이고, 기존에는 이것을 한번 가공한 jpeg 형태로 이미지가 캡쳐되었는데, 이제는 이 raw format 형태로도 데이터를 가져올수있게되었습니다. 
+코드상에서 raw format 을 가져오는 부분은 지금보시는것처럼 AVCapturePhotoSetting을 만들어줄때 rawFormat으로 만들어줘 하면 되는데, Raw Format은 후면카메라일때만 동작을 한다고 합니다.
+이미지를 받았을때 지금보시는것처럼 delegate가 불리고 DNG라는 Adobe에서 만든 Raw 파일 format이 있는데, 앞으로 이 확장자를 이용해서 아이폰쪽에서도 raw image를 다룬다고 합니다.
+
+다음으로는 프리뷰이미지를 캡쳐하는건데요, 이전에는 큰 이미지를 가져와서 downscale해서 preview 이미지를 만들어줬었는데, 앞으로는 캡쳐단에서 downscale이미지를 얻을수 있다고 해요. 코드상에서는 지금보시는것같이 AVCapturePhotoSetting밑에 previewPhotoFormat이란 부분이 있어서 이 부분을 설정해주면 해당 크기의 프리뷰 이미지를 받을 수 있다고 합니다.
+
+다음으로 설명드릴것은 Wide Color 부분인데요, iPad Pro 9.7부터 True Tone Display라는 기능이 제공되고 ios9.3 부터 Color management기능을 제공하고 있습니다.
+기존에는 sRGB형태의 지금 보시는 정도의 칼라 영역을 표현해줬다고 하면 그것보다 초록색과 빨간색 부분을 더 표현하는 Display P3 Color Space를 쓰는 장비들이 있다는 얘긴데요, 캡쳐하는 부분에서는 크게 신경쓸 필요없이 AVCaptureSession에 automaticallyConfiguresCaptureDeviceForWideColor 라는 변수가 있는데 이걸 True로 세팅을 해주면 AVCaptureSession이 알아서 적합한 format과 color space 로 세팅을 해주게 됩니다.
+
+다음으로는 Privacy 관련해서 변경된 부분이 있는데요, ios7부터 사진이나 카메라에 접근을 하려고 하면 왼쪽과 같은 팝업이 떴는데요, ios10부터는 조금더 강화가 되어서 오른쪽 보시는 부분과 같이 무슨목적으로 접근을 하는지를 명세해야한다고 합니다. 명세는 지금보시는것과같이 info.plist부분에 해주면 됩니다.
+
+다음으로는 Replaykit 과 관련된 내용인데요, ios9 부터 지금보시는것과 같이 앱화면을 녹화할수 있는 SDK인 Replaykit이라는걸 제공하고 있었습니다. 보시는것과 같이 촬영을 시작하면 화면만 녹화할지 마이크도 같이 녹화할지를 물어보는 팝업이 뜨고, 녹화가 끝나면 해당 동영상을 볼수 있는 프리뷰뷰도 볼 수 있게 되어있는데요, 지금보시는것과 같이 코드도 굉장히 간단합니다. RPScreenRecorder라는 애의 인스턴스를 받아서 startRecodingWithMicrophone이란 함수를 호출하면 아까와같은 팝업이 뜨고요, stopRecodingWithHandler함수를 호출하면 preview를 띄울수 있는 viewcontroller가 넘어옵니다.
+
+여기까지가 이제 ios9에서 제공해주는 기능이고 ios10부터는 실시간으로 broadcasting해주는 부분이 추가가 되었는데요, RPBroadcastActivityViewController라는걸 호출하면 팝업으로 Broadcast할수 있는 서비스를 고를 수 있는 팝업이 뜨고요, 고르고나면 세번째 함수와같이 딜리게이트 됩니다. 여기서 넘어온 broadcastController의startBroadcast해주면 브로드케스팅이 되고, 끝날때는 두번째함수처럼 finishBroadcast하게되면 끝나게 됩니다.
+WWDC에서는 MOBCrush라는 서비스를 통해서 데모를 했었는데요, 두번째처럼 ActivityViewController를 띄우고, 세번째처럼 브로드케스트하는 정보를 넣고, 게임화면을 브로드케스팅하는 데모였습니다.
+
+다음으로 Core image 관련된 변경사항인데요. 결국 필터링을 한다는건 이미지메트릭스에 어떤 kernel function을 곱한다는 건데요, CIFilter 쪽에서는 Fragment Shader 코드 비슷하게만들어진 Core Image Kernel Language라는 애가 있어요. 각각의 필터들은 이 CIKernel 이라는 애들이 있고, CIFiter는 이런 CIKernel들의 Chanin을 자동적으로 하나의 Concatenated된 프로그램으로 만들어서 적용을한다고 해요. 기존까지 180여개정도의 CIFilter가 이미 제공되고 있었고, ios10 부터 또 몇개의 필터가 추가 되었는데요, 지금 보시는것과 같이 CIHueSaturationValueGradient라고 해서 HSV color space 관련된 필터가 하나 추가 되었고, CINinePartStretched와 CINinePartTiled라고 해서 NinePatch와 관련된 필터인데 왼쪽과같은 이미지를 늘리려고 하면 아홉등분을 하고 그 가운데부분들을 스트레칭을 할거나. 타일형태로 배치해주는 필터입니다.
+다음으로 CIEdgePreserveUpsampleFilter인데요, 6*7 픽셀의 어떤 필터이미지를 1024*768이미지에 씌워주려고하면 이제 이 이미즈를 확대를 해줘야하는데 그냥 확대를 한다면, 위에 이미지처럼 그냥 확대된 이미지가 나올껀데, 상황에 따라서는 이 가이드 영상의 Edge들을 살려줘야 할 때가 있어요 그랬을때 CIEdgePreserveUpsampleFilter를 이용하면 가이드된 이미지의 edge정보가 반영된 상태로 확대를 할 수 있게 됩니다.
+
+성능적으로도 향상된 부분이 있는데요, GPU를 사용하는 Metal framework를 디폴트로 사용하게 바뀌었고, Core Image 단에서 처리한 CIImage를 결국 화면에 보여주려면 UIImage로 바꿔줘야하는데 이 부분 속도가 굉장히 빨라졌다고 합니다. Pixel Format도 기존에는 RGBA8 만 지원하다가 RGBAF, RGBAh 등도 지원하게 바뀌었다고 합니다.
+
+다음으로 또 크게 추가된게 CIImageProcessor라는 애인데요, 기존에 Custom filter를 만들다보면 Core Image Kernel Laguage로만 필터부분을 짜는데는 한계가 있어요, 그래서 필터중간에 해당 프로세싱된 버퍼를 CPU단에서 처리를 하고 다시 필터를 입혀주고 해야하는데요, 이 부분이 CIImageProcessor라는 부분으로 빠져서 CPU나 Metal Code로 처리할수 있게 바뀌었습니다.
+WWDC에서 CIImageProcessor를 사용하는 과정을 설명하기위해 예로든것이 Integral Image라는 것을 이용해서 Box blur를 입히는 과정을 예로 들었는데요. 
+
+Integral Image 한국말로는 적분이미지인데요, 어려운 개념이 아니라 그냥 자기보다 앞에 나왔던 픽셀값들을 전부 더한 값이라는 개념이에요. 지금 오른쪽에 45가 어떻게 나왔냐.. 하면 그 45가 있는 왼쪽의 박스영역에 있는 모든 숫자를 더하면 45가 나옵니다.
+어떤 개념인지 아시겠죠. 여기 10의 경우는 1+4+5를 하면 10이 나오죠. 17은 1+4+0+2+3+7을하면.. 17이 나오죠
+아무튼 이런 Integral Image를 어디에 사용하는가 하면 지금보시는것과 같이 블러를 입힐때 사용을합니다. 블러라는건 크게 어려운건 없고, 주변값들과 다 합쳐준다음에 평균값을 내면 보시는것과 같은 블러효과를 볼 수 있습니다. 예를들어 지금 보시는 8이라는 지점의 픽셀값을 주변 값, 지금 파란색으로 처리된 부분을 다 더하고 평균낸 값이 블러된 픽셀의 값이 되는건거죠.
+
+그럼 여기서 이 다 더하는 부분을 어떻게 계산을 할꺼냐… 보통을 걍 포문 두번 돌면서 다 더할꺼에요. 포 row는 1부터 3까지 for col은 1부터 3까지 해서 다 더해라 이렇게 짜겠죠. 이러면 n^2번의 read가 발생할겁니다. 조금더 빠르게 하자면 병렬처리를 하게 되면 2n 번read로 처리할 수 있을거구요. 이걸 Integral Image를 쓰면 박스크기와 상관없이 4번만에 처리를 할 수 있는데요. 현재 박스영역의 합을 알고싶다 하면 이부분값 66에서 이값 10, 13을 빼고, 이부분은 두번빠진 형태가 되니까 다시 한번 더해주면 같은 값이 나오게 된다는 건거죠. 아무튼 이건 중요하지 않습니다. 블러처리를 하는데 Integral Image라는게 중간에 있으면 좋다는건거죠.
+본론으로 돌아와서 CIImageProcessor 를 이용해서 Integral Image를 만들어주는 부분인데요, input과 output으로 들어오는 CIImageProcessorInput output 객체는 CVPixelBuffer를 가지고 있고, CVPixelBuffer를 통해서 각 픽셀 정보에 접근 할 수 있습니다. 지금보시는것과 같이 for문을 돌면서 Integral Image 값을 계산할수 있고, 또는 지금 보시는것과같이 Metal Performance Shader를 이용해서 계산할수도 있습니다.
+
+이부분코드는 이제 CIKernel 부분에서 Integral Image 데이터를 이용해서 픽셀값을 계산하는 부분인데요, 앞에서 말했던 방식대로 어퍼레프트 어퍼라이트 로워리프트 로워라이트 점을 뽑아서 그 점값으로 Blur 값을 구해주는 부분 코드입니다.
+
+마지막으로 speech recognition 관련된 API인데요, 라이브음성이나, 녹음된 음성파일을 Speech Recognizer를 이용해서 텍스트 파일로 만들어주는 기능입니다.
+기존에 키보드부분에 마이크로 표시되어있던 받아쓰기 기능으로 들어가있던 기능이 API로 빠져서 공개가 된 기능입니다.
+이부분 코드는 굉장히 단순해요 SFSpeechRecognizer라는걸 만들어주고 이 객체에 해당파일을 던져주면 결과로 던져주는 애들중에 SFTranscription이라는 애가 있는데 얘의 formattedString을 보면 인식된 택스트를 알수있습니다.
+더 자세한 내용은 SPEAKTOME라는 이름으로 코드가 공개되어있습니다.
+
+정리를 해보면 IOS10에서는 Wide color를 지원하고 RAW Format 데이터의 이미지를 사용가능하구요,
+Live Photo를 편집할수 있게되었습니다. Replaykit이 broadcasting을 지원하고, SpeachRecognition API가 공개되었습니다. 감사합니다.
 
 
 
